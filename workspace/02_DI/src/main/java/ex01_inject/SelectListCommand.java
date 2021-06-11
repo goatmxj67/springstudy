@@ -1,6 +1,7 @@
 package ex01_inject;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 /*
 	@Inject
 	
@@ -40,10 +41,18 @@ public class SelectListCommand {
 	// field
 	private Dao dao;
 	
+	// contructor
+	public SelectListCommand() {}
+	
 	// setter
 	@Inject
+	@Named("dao1")  // <bean id="dao1"> 인 bean을 생성하라.
 	public void setDao(Dao dao) {
 		this.dao = dao;
+	}
+	// getter
+	public Dao getDao() {
+		return dao;
 	}
 	
 	public void execute() {

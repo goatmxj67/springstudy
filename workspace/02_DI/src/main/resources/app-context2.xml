@@ -5,13 +5,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
-	<!-- 애너테이션을 이용해서 bean을 생성한다. -->
 	<context:annotation-config />
 	
-	<!-- 동일한 타입을 가진 bean이 여러 개인 경우 @Inject는 @Named를 이용해서 구분한다. -->
-	<bean id="dao1" class="ex01_inject.Dao" />
-	<bean id="dao2" class="ex01_inject.Dao" />
-	
-	<bean id="selectListCommand" class="ex01_inject.SelectListCommand" />
+	<bean id="boardDao" class="ex02_resource.Dao" />
+	<bean id="selectListCommand" class="ex02_resource.SelectListCommand" />
 
 </beans>
