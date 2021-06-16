@@ -8,7 +8,13 @@
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script>
-		
+		$(document).ready(function() {
+			
+			$('#insert_btn').click(function(){
+				location.href = 'insertBoardPage.do';
+			})
+			
+		})
 	</script>
 	<style>
 		table {
@@ -46,10 +52,12 @@
 			</c:if>
 			<c:if test="${not empty list}">
 				<c:forEach var="board" items="${list}">
-					<td>${board.no}</td>
-					<td>${board.writer}</td>				
-					<td>${board.title}</td>
-					<td>${board.postdate}</td>
+					<tr>
+						<td>${board.no}</td>
+						<td>${board.writer}</td>				
+						<td>${board.title}</td>
+						<td>${board.postdate}</td>
+					</tr>
 				</c:forEach>
 			</c:if>
 		</tbody>
