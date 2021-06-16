@@ -8,30 +8,13 @@
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script>
-		$(document).ready(function() {
-			
+		$(document).ready(function(){
 			$('#insert_btn').click(function(){
 				location.href = 'insertBoardPage.do';
 			})
-			
 		})
 	</script>
-	<style>
-		table {
-			width: 500px;
-			border-collapse: collapse;
-		}
-		td {
-			padding: 5px;
-			text-align: center;
-			border-top: 1px solid gray;
-			border-bottom: 1px solid gray;
-		}
-		td:nth-of-type(1) { width: 100px; }
-		td:nth-of-type(2) { width: 100px; }
-		td:nth-of-type(3) { width: 200px; }
-		td:nth-of-type(4) { width: 100px; }
-	</style>
+	<link rel="stylesheet" href="resources/assets/css/style.css">
 </head>
 <body>
 	<h1>게시판 목록</h1>
@@ -55,7 +38,7 @@
 					<tr>
 						<td>${board.no}</td>
 						<td>${board.writer}</td>				
-						<td>${board.title}</td>
+						<td><a href="selectBoardByNo.do?no=${board.no}">${board.title}</a></td>
 						<td>${board.postdate}</td>
 					</tr>
 				</c:forEach>
