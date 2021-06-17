@@ -30,8 +30,9 @@
 	
 	<!-- command -->
 	<beans:bean id="selectBoardListCommand" class="com.koreait.board02.command.SelectBoardListCommand" />
-	<beans:bean id="selectBoardViewCommand" class="com.koreait.board02.command.SelectBoardViewCommand"/>
-	
+	<beans:bean id="selectBoardViewCommand" class="com.koreait.board02.command.SelectBoardViewCommand" />
+	<beans:bean id="updateBoardCommand" class="com.koreait.board02.command.UpdateBoardCommand" />
+	<beans:bean id="deleteBoardCommand" class="com.koreait.board02.command.DeleteBoardCommand" />
 	
 	
 	

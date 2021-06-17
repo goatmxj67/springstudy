@@ -1,10 +1,13 @@
 package com.koreait.board02.dao;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 
 import com.koreait.board02.dto.Board;
 
@@ -28,7 +31,31 @@ public class BoardDAO {
 		return template.queryForObject(sql, new BeanPropertyRowMapper<>(Board.class), no);
 	}
 	
+	// 3. update
+	public int updateBoard(Board board) {
+		sql = "UPDATE BOARD SET TITLE = ?, CONTENT = ? WHERE NO = ?";
+		 return template.update(sql, new PreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				// 매개변수 ps를 이용해서 ?를 채움
+				ps.setString(1, board.getTitle());
+				ps.setString(2, board.getContent());
+				ps.setLong(3, board.getNo());
+			}
+		});
+	}
 	
+	// 4. delete
+	public int deleteBoard(long no) {
+		sql = "DELETE FROM BOARD WHERE NO = ?";
+		return template.update(sql, new PreparedStatementSetter() {
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				// TODO 매개변수 ps를 이용해서 ? 채움
+				ps.setLong(1, no);
+			}
+		});
+	}
 	
 	
 	

@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 
 import com.koreait.board02.dao.BoardDAO;
 
-public class SelectBoardViewCommand implements BoardCommand {
+public class DeleteBoardCommand implements BoardCommand {
 
 	@Autowired
 	private BoardDAO boardDAO;
@@ -17,8 +17,8 @@ public class SelectBoardViewCommand implements BoardCommand {
 		
 		Map<String, Object> map = model.asMap();
 		long no = (Long)map.get("no");
-		model.addAttribute("board", boardDAO.selectBoardByNo(no));
-		
+		boardDAO.deleteBoard(no);
+
 	}
 
 }
