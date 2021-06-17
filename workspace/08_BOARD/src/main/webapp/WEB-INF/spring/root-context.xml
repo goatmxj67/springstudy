@@ -4,5 +4,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+	
+	<!-- command를 bean으로 등록해 둔다. -->
+	<bean id="boardListCommand" class="com.koreait.board01.command.BoardListCommand" />
+	<bean id="boardViewCommand" class="com.koreait.board01.command.BoardViewCommand" />
+	<bean id="deleteBoardCommand" class="com.koreait.board01.command.DeleteBoardCommand" />
+	<bean id="insertBoardCommand" class="com.koreait.board01.command.InsertBoardCommand" />
+	<bean id="updateBoardCommand" class="com.koreait.board01.command.UpdateBoardCommand" />
+	
 </beans>
