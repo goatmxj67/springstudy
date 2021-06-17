@@ -1,5 +1,6 @@
 package com.koreait.board02.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 
 import com.koreait.board02.dto.Board;
@@ -57,7 +59,22 @@ public class BoardDAO {
 		});
 	}
 	
-	
+	// 5. insert
+	public int insertBoard(Board board) {
+		// PreparedStatementSetter로 작업해도 됨
+		return template.update(new PreparedStatementCreator() {
+			@Override
+			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
+				// TODO 매개변수 con으로 ps를 만들어서 반환
+				String sql = "INSERT INTO BOARD VALUES (BOARD_SEQ.NEXTVAL, ?, ?, ?, SYSDATE)";
+				PreparedStatement ps = con.prepareStatement(sql);
+				ps.setString(1, board.getWriter());
+				ps.setString(2, board.getTitle());
+				ps.setString(3, board.getContent());
+				return ps;
+			}
+		});
+	}
 	
 	
 	

@@ -13,6 +13,7 @@ import com.koreait.board02.command.SelectBoardListCommand;
 import com.koreait.board02.command.SelectBoardViewCommand;
 import com.koreait.board02.command.UpdateBoardCommand;
 import com.koreait.board02.command.DeleteBoardCommand;
+import com.koreait.board02.command.InsertBoardCommand;
 import com.koreait.board02.dto.Board;
 
 @Controller
@@ -23,16 +24,19 @@ public class BoardController {
 	private SelectBoardViewCommand selectBoardViewCommand;
 	private UpdateBoardCommand updateBoardCommand;
 	private DeleteBoardCommand deleteBoardCommand;
+	private InsertBoardCommand insertBoardCommand;
 		
 	@Autowired
 	public void setCommand(SelectBoardListCommand selectBoardListCommand,  // setCommand 대신 BoardCommand 생성자여도 된다.
 						   SelectBoardViewCommand selectBoardViewCommand,
 						   UpdateBoardCommand updateBoardCommand,
-						   DeleteBoardCommand deleteBoardCommand) {
+						   DeleteBoardCommand deleteBoardCommand,
+						   InsertBoardCommand insertBoardCommand) {
 		this.selectBoardListCommand = selectBoardListCommand;
 		this.selectBoardViewCommand = selectBoardViewCommand;
 		this.updateBoardCommand = updateBoardCommand;
 		this.deleteBoardCommand = deleteBoardCommand;
+		this.insertBoardCommand = insertBoardCommand;
 	}
 	
 	@GetMapping(value="/")
@@ -65,7 +69,7 @@ public class BoardController {
 							  Model model) {
 		model.addAttribute("req", request);  // UpdateBoardCoammand에게 전달하기 위해서
 		updateBoardCommand.execute(model);
-		return "redirect:selectBoardList.do";  // selectBoardList.do 매핑으로 리다이렉트(삽입, 수정, 삭제)
+		return "redirect:selectBoardByNo.do?no=" + request.getParameter("no");  // selectBoardByNo.do 매핑으로 리다이렉트(삽입, 수정, 삭제)
 	}
 	
 	@GetMapping(value="deleteBoard.do")
@@ -76,6 +80,23 @@ public class BoardController {
 		// return "redirect:selectBoardList.do";  // 삭제 후 목록 보기로 이동
 		return selectBoardList(model);
 	}
+	
+	@GetMapping(value="insertBoardPage.do")
+	public String insertBoardPage() {
+		return "board/insert";
+	}
+	
+	@GetMapping(value="insertBoard.do")
+	public String insertBoard(Board board,
+							  Model model) {
+		model.addAttribute("board", board);  // InsertBoardCommand에 전달하기 위해서 
+		insertBoardCommand.execute(model);
+		return "redirect:selectBoardList.do";
+	}
+	
+	
+	
+	
 	
 	
 	
