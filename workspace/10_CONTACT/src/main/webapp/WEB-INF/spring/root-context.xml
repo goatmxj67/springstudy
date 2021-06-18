@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- command를 bean으로 등록해 둔다. -->
+	<bean id="contactListCommand" class="com.koreait.contact01.command.ContactListCommand" />
+	<bean id="contactViewCommand" class="com.koreait.contact01.command.ContactViewCommand" />
+	<bean id="deleteContactCommand" class="com.koreait.contact01.command.DeleteContactCommand" />
+	<bean id="insertContactCommand" class="com.koreait.contact01.command.InsertContactCommand" />
+	<bean id="updateContactCommand" class="com.koreait.contact01.command.UpdateContactCommand" />
+		
+</beans>
