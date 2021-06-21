@@ -1,4 +1,4 @@
-package com.koreait.contact01.command;
+package com.koreait.contact02.command;
 
 import java.util.Map;
 
@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
-import com.koreait.contact01.dao.ContactDAO;
-import com.koreait.contact01.dto.Contact;
+import com.koreait.contact02.dao.ContactDAO;
+import com.koreait.contact02.dto.Contact;
 
 public class UpdateContactCommand implements ContactCommand {
 

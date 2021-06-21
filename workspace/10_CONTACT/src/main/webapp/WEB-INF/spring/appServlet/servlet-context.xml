@@ -23,6 +23,11 @@
 	
 	<context:component-scan base-package="com.koreait.contact01" />
 	
-	
+	<beans:bean id="contactDAO" class="com.koreait.contact01.dao.ContactDAO" />
+	<beans:bean id="selectContactListCommand" class="com.koreait.contact01.command.SelectContactListCommand" />
+	<beans:bean id="selectContactViewCommand" class="com.koreait.contact01.command.SelectContactViewCommand" />
+	<beans:bean id="insertContactCommand" class="com.koreait.contact01.command.InsertContactCommand" />
+	<beans:bean id="updateContactCommand" class="com.koreait.contact01.command.UpdateContactCommand" />
+	<beans:bean id="deleteContactCommand" class="com.koreait.contact01.command.DeleteContactCommand" />
 	
 </beans:beans>

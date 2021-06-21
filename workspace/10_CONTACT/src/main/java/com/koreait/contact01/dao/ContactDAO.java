@@ -15,46 +15,39 @@ import javax.sql.DataSource;
 import com.koreait.contact01.dto.Contact;
 
 public class ContactDAO {
-	
+
 	private Connection con;
 	private PreparedStatement ps;
 	private ResultSet rs;
 	private String sql;
-
 	private DataSource dataSource;
-	private static ContactDAO instance;
 	
-	private ContactDAO() {
+	public ContactDAO() {
+		// tomcat의 context.xml에 있는 설정을 읽어와서 dataSource를 만든다.
 		try {
 			Context context = new InitialContext();
-			dataSource = (DataSource)context.lookup("java:comp/env/jdbc/oracle");
+			dataSource = (DataSource)context.lookup("java:comp/env/jdbc/oracle");  // 톰캣이다: java:comp/env/ 나머지는 <Resource>의 name 속성
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static ContactDAO getInstance() {
-		if (instance == null) {
-			instance = new ContactDAO();
-		}
-		return instance;
-	}
-	
-	public void close(Connection con, PreparedStatement ps, ResultSet rs) {
+	private void close(Connection con, PreparedStatement ps, ResultSet rs) {
 		try {
-			if (con != null) con.close();
-			if (ps != null) ps.close();
-			if (rs != null) rs.close();
+			if (rs != null) { rs.close(); }
+			if (ps != null) { ps.close(); }
+			if (con != null) { con.close(); }
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	// 1. list
 	public List<Contact> selectContactList() {
-		List<Contact> list = new ArrayList<Contact>();
+		List<Contact> list = new ArrayList<>();
 		try {
 			con = dataSource.getConnection();
-			sql = "SELECT NO, NAME, TEL, ADDR, EMAIL FROM CONTACT";
+			sql = "SELECT NO, NAME, TEL, ADDR, EMAIL, NOTE FROM CONTACT ORDER BY NO DESC";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -64,6 +57,7 @@ public class ContactDAO {
 				contact.setTel(rs.getString(3));
 				contact.setAddr(rs.getString(4));
 				contact.setEmail(rs.getString(5));
+				contact.setNote(rs.getString(6));
 				list.add(contact);
 			}
 		} catch (Exception e) {
@@ -74,24 +68,7 @@ public class ContactDAO {
 		return list;
 	}
 	
-	public void insertContact(Contact contact) {
-		try {
-			con = dataSource.getConnection();
-			sql = "INSERT INTO CONTACT VALUES (CONTACT_SEQ.NEXTVAL, ?, ?, ?, ?, ?)";
-			ps = con.prepareStatement(sql);
-			ps.setString(1, contact.getName());
-			ps.setString(2, contact.getTel());
-			ps.setString(3, contact.getAddr());
-			ps.setString(4, contact.getEmail());
-			ps.setString(5, contact.getNote());
-			ps.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(con, ps, null);
-		}
-	}
-	
+	// 2. view
 	public Contact selectContactByNo(long no) {
 		Contact contact = null;
 		try {
@@ -117,7 +94,30 @@ public class ContactDAO {
 		return contact;
 	}
 	
-	public void updateContact(Contact contact) {
+	// 3. insert
+	public int insertContact(Contact contact) {
+		int count = 0;
+		try {
+			con = dataSource.getConnection();
+			sql = "INSERT INTO CONTACT VALUES (CONTACT_SEQ.NEXTVAL, ?, ?, ?, ?, ?)";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, contact.getName());
+			ps.setString(2, contact.getTel());
+			ps.setString(3, contact.getAddr());
+			ps.setString(4, contact.getEmail());
+			ps.setString(5, contact.getNote());
+			count = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(con, ps, null);
+		}
+		return count;
+	}
+	
+	// 4. update
+	public int updateContact(Contact contact) {
+		int count = 0;
 		try {
 			con = dataSource.getConnection();
 			sql = "UPDATE CONTACT SET NAME = ?, TEL = ?, ADDR = ?, EMAIL = ?, NOTE = ? WHERE NO = ?";
@@ -128,26 +128,30 @@ public class ContactDAO {
 			ps.setString(4, contact.getEmail());
 			ps.setString(5, contact.getNote());
 			ps.setLong(6, contact.getNo());
-			ps.executeUpdate();
+			count = ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(con, ps, null);
 		}
+		return count;
 	}
 	
-	public void deleteContact(long no) {
+	// 5. delete
+	public int deleteContact(long no) {
+		int count = 0;
 		try {
 			con = dataSource.getConnection();
 			sql = "DELETE FROM CONTACT WHERE NO = ?";
 			ps = con.prepareStatement(sql);
 			ps.setLong(1, no);
-			ps.executeUpdate();
+			count = ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(con, ps, null);
 		}
+		return count;
 	}
 	
 }

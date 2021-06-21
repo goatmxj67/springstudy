@@ -1,4 +1,4 @@
-package com.koreait.contact01.controller;
+package com.koreait.contact02.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,11 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.koreait.contact01.command.DeleteContactCommand;
-import com.koreait.contact01.command.InsertContactCommand;
-import com.koreait.contact01.command.SelectContactListCommand;
-import com.koreait.contact01.command.SelectContactViewCommand;
-import com.koreait.contact01.command.UpdateContactCommand;
+import com.koreait.contact02.command.DeleteContactCommand;
+import com.koreait.contact02.command.InsertContactCommand;
+import com.koreait.contact02.command.SelectContactListCommand;
+import com.koreait.contact02.command.SelectContactViewCommand;
+import com.koreait.contact02.command.UpdateContactCommand;
 
 @Controller
 public class ContactController {

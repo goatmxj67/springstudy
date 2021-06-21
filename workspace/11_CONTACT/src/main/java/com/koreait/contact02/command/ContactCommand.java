@@ -1,4 +1,4 @@
-package com.koreait.contact01.command;
+package com.koreait.contact02.command;
 
 import org.springframework.ui.Model;
 

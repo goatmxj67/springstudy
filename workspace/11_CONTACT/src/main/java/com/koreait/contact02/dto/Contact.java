@@ -1,4 +1,4 @@
-package com.koreait.contact01.dto;
+package com.koreait.contact02.dto;
 
 public class Contact {
 

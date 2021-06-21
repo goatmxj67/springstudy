@@ -1,4 +1,4 @@
-package com.koreait.contact01.command;
+package com.koreait.contact02.command;
 
 import java.util.Map;
 
@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 
-import com.koreait.contact01.dao.ContactDAO;
-import com.koreait.contact01.dto.Contact;
+import com.koreait.contact02.dao.ContactDAO;
+import com.koreait.contact02.dto.Contact;
 
-public class UpdateContactCommand implements ContactCommand {
+public class InsertContactCommand implements ContactCommand {
 
 	@Autowired
 	private ContactDAO contactDAO;
@@ -24,7 +24,6 @@ public class UpdateContactCommand implements ContactCommand {
 		HttpServletResponse response = (HttpServletResponse) map.get("response");
 		
 		Contact contact = new Contact();
-		contact.setNo(Long.parseLong(request.getParameter("no")));
 		contact.setName(request.getParameter("name"));
 		contact.setTel(request.getParameter("tel"));
 		contact.setAddr(request.getParameter("addr"));
@@ -32,16 +31,16 @@ public class UpdateContactCommand implements ContactCommand {
 		contact.setNote(request.getParameter("note"));
 
 		response.setContentType("text/html; charset=utf-8");
-		int count = contactDAO.updateContact(contact);
+		int count = contactDAO.insertContact(contact);
 		try {
 			if (count >  0) {
 				response.getWriter().println("<script>");
-				response.getWriter().println("alert('연락처가 수정되었습니다.')");
-				response.getWriter().println("location.href='selectContactView.do?no=" + request.getParameter("no") + "'");  // 여기서 redirect 이루어짐
+				response.getWriter().println("alert('연락처가 등록되었습니다.')");
+				response.getWriter().println("location.href='selectContactList.do'");  // 여기서 redirect 이루어짐
 				response.getWriter().println("</script>");
 			} else {
 				response.getWriter().println("<script>");
-				response.getWriter().println("alert('연락처가 수정되지 않았습니다.')");
+				response.getWriter().println("alert('연락처가 등록되지 않았습니다.')");
 				response.getWriter().println("history.back()");
 				response.getWriter().println("</script>");
 			}
