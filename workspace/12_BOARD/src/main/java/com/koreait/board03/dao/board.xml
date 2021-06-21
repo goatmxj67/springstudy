@@ -34,6 +34,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO BOARD
 		VALUES (BOARD_SEQ.NEXTVAL, #{writer}, #{title}, #{content}, SYSDATE)
 	</insert>
+	<insert id="insertBoard2">
+		INSERT INTO BOARD
+		VALUES (BOARD_SEQ.NEXTVAL, #{param1}, #{param2}, #{param3}, SYSDATE)
+	</insert>
+
+	<update id="updateBoard">
+		UPDATE BOARD
+		   SET TITLE = #{title}
+		     , CONTENT = #{content}
+		 WHERE NO = #{no}
+	</update>
+	<update id="updateBoard2">
+		UPDATE BOARD
+		   SET TITLE = #{param1}
+		     , CONTENT = #{param2}
+		 WHERE NO = #{param3}
+	</update>
+	
 
 
 

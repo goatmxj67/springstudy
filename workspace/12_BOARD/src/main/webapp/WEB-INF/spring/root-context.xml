@@ -28,5 +28,11 @@
 	<bean id="listCommand" class="com.koreait.board03.command.SelectBoardListCommand" />
 	<bean id="viewCommand" class="com.koreait.board03.command.SelectBoardViewCommand" />
 	<bean id="insertCommand" class="com.koreait.board03.command.InsertBoardCommand" />
+	<bean id="updateCommand" class="com.koreait.board03.command.UpdateBoardCommand" />
+	
+
+
+
+
 	
 </beans>

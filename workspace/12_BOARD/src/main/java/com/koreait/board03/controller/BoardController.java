@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.koreait.board03.command.InsertBoardCommand;
 import com.koreait.board03.command.SelectBoardListCommand;
 import com.koreait.board03.command.SelectBoardViewCommand;
+import com.koreait.board03.command.UpdateBoardCommand;
+import com.koreait.board03.dto.Board;
 
 @Controller
 public class BoardController {
@@ -29,6 +32,9 @@ public class BoardController {
 	
 	@Autowired
 	private InsertBoardCommand insertBoardCommand;
+	
+	@Autowired
+	private UpdateBoardCommand updateBoardCommand;
 	
 	@GetMapping(value="/")
 	public String index() {
@@ -61,5 +67,27 @@ public class BoardController {
 		insertBoardCommand.execute(sqlSession, model);
 		return "redirect:selectBoardList.do";  // selectBoardList.do로 리다이렉트
 	}
+	
+	@PostMapping(value="updateBoardPage.do")
+	public String updateBoardPage(Board board,
+								  Model model) {  // @ModelAttribute Board board
+		model.addAttribute("board", board);
+		return "board/update";  // board/update.jsp로 포워딩
+	}
+	
+	@PostMapping(value="updateBoard.do")
+	public String updateBoard(HttpServletRequest request,
+							  Model model) {
+		model.addAttribute("request", request);
+		updateBoardCommand.execute(sqlSession, model);
+		return "redirect:selectBoardByNo.do?no=" + request.getParameter("no");
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 }
