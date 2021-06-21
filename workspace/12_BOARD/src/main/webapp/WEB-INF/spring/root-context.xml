@@ -5,34 +5,30 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-	<!-- DBCP 처리하는 dataSource -->
+	<!-- DBCP 처리하는 dataSource
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
 		<property name="username" value="spring" />
 		<property name="password" value="1111" />
-	</bean>
+	</bean> -->
 	
-	<!-- SqlSessionFactory -->
+	<!-- SqlSessionFactory
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="mapperLocations" value="classpath:com/koreait/board03/dao/*.xml" />
 		<property name="dataSource" ref="dataSource" />
-	</bean>
+	</bean> -->
 	
-	<!-- SqlSession -->
+	<!-- SqlSession
 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
-	</bean>
+	</bean> -->
 	
-	
+	<!-- command
 	<bean id="listCommand" class="com.koreait.board03.command.SelectBoardListCommand" />
 	<bean id="viewCommand" class="com.koreait.board03.command.SelectBoardViewCommand" />
 	<bean id="insertCommand" class="com.koreait.board03.command.InsertBoardCommand" />
 	<bean id="updateCommand" class="com.koreait.board03.command.UpdateBoardCommand" />
-	
-
-
-
-
+	<bean id="deleteCommand" class="com.koreait.board03.command.DeleteBoardCommand" /> -->
 	
 </beans>

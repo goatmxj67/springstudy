@@ -15,6 +15,14 @@
 	</properties>
 	<dependencies>
 		
+		<!-- BeanConfiguration.java -->
+		<!-- https://mvnrepository.com/artifact/cglib/cglib -->
+		<dependency>
+		    <groupId>cglib</groupId>
+		    <artifactId>cglib</artifactId>
+		    <version>2.2.2</version>
+		</dependency>
+		
 		<!-- MyBatis 디펜던시 : mybatis + mybatis-spring + spring-jdbc -->
 		
 		<!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->

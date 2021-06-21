@@ -99,13 +99,13 @@ MyBatis를 활용한 간단게시판 작성
 		return dataSource;
 	}
 	@Bean
-	public SqlSessionFactoryBean sqlSessionFactory() {
+	public SqlSessionFactory sqlSessionFactory() throws Exception {
 		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
-		sqlSessionFactory.setMapperLocations("classpath:com/koreait/board03/dao/*.xml");
 		sqlSessionFactory.setDataSource(dataSource());
-		return sqlSessionFactory;
+		sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:com/koreait/board03/dao/*.xml"));
+		return sqlSessionFactory.getObject();
 	}
 	@Bean
-	public SqlSessionTemplate sqlSession() {
+	public SqlSessionTemplate sqlSession() throws Exception {
 		return new SqlSessionTemplate(sqlSessionFactory());
 	}

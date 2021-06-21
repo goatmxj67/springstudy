@@ -20,7 +20,7 @@ public interface BoardDAO {
 	public void updateBoard(Board board);
 	public void updateBoard2(String title, String content, long no);
 	
-	
+	public void deleteBoard(long no);
 	
 	
 	

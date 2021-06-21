@@ -52,10 +52,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE NO = #{param3}
 	</update>
 	
-
-
-
-
-
+	<delete id="deleteBoard">
+		DELETE
+		  FROM BOARD
+		 WHERE NO = #{no}
+	</delete>
 
 </mapper>
