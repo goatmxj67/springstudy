@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+table {
+	width: 500px;
+	border-collapse: collapse;
+}
+td {
+	padding: 5px;
+	text-align: center;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
+}
+td:nth-of-type(1) { width: 100px; }
+td:nth-of-type(2) { width: 100px; }
+td:nth-of-type(3) { width: 200px; }
+td:nth-of-type(4) { width: 100px; }
