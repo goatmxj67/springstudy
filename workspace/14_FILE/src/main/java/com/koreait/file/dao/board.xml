@@ -15,5 +15,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO BOARD
 		VALUES (BOARD_SEQ.NEXTVAL, #{param1}, #{param2}, #{param3}, #{param4}, SYSDATE)
 	</insert>
+	
+	<select id="selectBoardByNo" resultType="com.koreait.file.dto.Board">
+		SELECT NO, WRITER, TITLE, CONTENT, FILENAME, POSTDATE
+		  FROM BOARD
+		 WHERE NO = #{param1}
+	</select>
 
 </mapper>

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.koreait.file.command.DownloadCommand;
 import com.koreait.file.command.InsertBoardCommand;
 import com.koreait.file.command.SelectBoardListCommand;
+import com.koreait.file.command.SelectBoardViewCommand;
 
 @Controller
 public class BoardController {
@@ -22,17 +23,20 @@ public class BoardController {
 	private SelectBoardListCommand selectBoardListCommand;
 	private InsertBoardCommand insertBoardCommand;
 	private DownloadCommand downloadCommand;
+	private SelectBoardViewCommand selectBoardViewCommand;
 	
 	@Autowired
 	public BoardController(SqlSession sqlSession, 
 						   SelectBoardListCommand selectBoardListCommand,
 						   InsertBoardCommand insertBoardCommand,
-						   DownloadCommand downloadCommand) {
+						   DownloadCommand downloadCommand,
+						   SelectBoardViewCommand selectBoardViewCommand) {
 		super();
 		this.sqlSession = sqlSession;
 		this.selectBoardListCommand = selectBoardListCommand;
 		this.insertBoardCommand = insertBoardCommand;
 		this.downloadCommand = downloadCommand;
+		this.selectBoardViewCommand = selectBoardViewCommand;
 	}
 
 	@GetMapping(value="/")
@@ -66,6 +70,14 @@ public class BoardController {
 		model.addAttribute("request", request);
 		model.addAttribute("response", response);
 		downloadCommand.execute(model);
+	}
+	
+	@GetMapping(value="selectBoardByNo.do")
+	public String selectBoardByNo(HttpServletRequest request,
+								  Model model) {
+		model.addAttribute("request", request);
+		selectBoardViewCommand.execute(sqlSession, model);
+		return "board/viewBoard";
 	}
 	
 }

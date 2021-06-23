@@ -12,6 +12,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import com.koreait.file.command.DownloadCommand;
 import com.koreait.file.command.InsertBoardCommand;
 import com.koreait.file.command.SelectBoardListCommand;
+import com.koreait.file.command.SelectBoardViewCommand;
 
 @Configuration
 public class BeanConfiguration {
@@ -55,6 +56,12 @@ public class BeanConfiguration {
 	public DownloadCommand downloadCommand() {
 		return new DownloadCommand();
 	}
+	@Bean
+	public SelectBoardViewCommand selectBoardViewCommand() {
+		return new SelectBoardViewCommand();
+	}
+	
+	
 	
 	
 	
