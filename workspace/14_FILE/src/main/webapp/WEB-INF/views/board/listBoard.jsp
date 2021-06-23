@@ -39,7 +39,7 @@
 						<td>${board.postdate}</td>
 						<td>
 							<c:if test="${not empty board.filename}">
-								<i class="fas fa-paperclip"></i>
+								<a href="download.do?filename=${board.filename}"><i class="fas fa-paperclip"></i></a>
 							</c:if>
 						</td>
 					</tr>
