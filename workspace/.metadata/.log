@@ -11948,3 +11948,9 @@ Java Model Exception: Java Model Status [updateBoardCommand#2 [in BoardControlle
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1499)
 !SUBENTRY 1 org.eclipse.jdt.core 4 969 2021-06-24 11:16:23.308
 !MESSAGE updateBoardCommand#2 [in BoardController [in [Working copy] BoardController.java [in com.koreait.file.controller [in src/main/java [in 14_FILE]]]]] does not exist
+
+!ENTRY org.eclipse.jface.text 2 0 2021-06-24 14:15:42.509
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2021-06-24 14:15:42.509
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
