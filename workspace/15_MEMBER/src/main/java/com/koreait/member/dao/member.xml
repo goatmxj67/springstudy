@@ -5,6 +5,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.koreait.member.dao.MemberDAO">
 
-			
+	<select id="idCheck" resultType="int">
+		SELECT COUNT(ID)
+		  FROM MEMBER
+		 WHERE ID = #{id}
+	</select>			
 
 </mapper>

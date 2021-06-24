@@ -1,3 +1,35 @@
 web.xml 인코딩
 pom 버전 최신화
-cglib mybatis3개 codec(암호화 처리- apache common codec)
+cglib, mybatis3개, codec(암호화 처리- apache common codec),
+<!-- JSON과 Bean 상호 변환 -->
+<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.9.4</version>
+</dependency>,
+
+<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+<dependency>
+    <groupId>javax.mail</groupId>
+    <artifactId>mail</artifactId>
+    <version>1.4.7</version>
+</dependency>,
+
+<!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context-support</artifactId>
+    <version>5.3.8</version>
+</dependency>
+5.3.8 -> ${org.springframework-version} 수정
+
+root-context.xml 수정
+
+구글 검색 "보안 수준이 낮은 앱 허용" -> https://support.google.com/accounts/answer/6010255
+계정에서 '보안 수준이 낮은 앱의 액세스'가 사용 중지된 경우
+다시 사용 설정할 수 있습니다. 링크 클릭
+
+ 
+ 
+ 

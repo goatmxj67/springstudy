@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
+import com.koreait.member.command.EmailAuthCommand;
+import com.koreait.member.command.IdCheckCommand;
+
 @Configuration
 public class BeanConfiguration {
 
@@ -31,6 +34,16 @@ public class BeanConfiguration {
 	public SqlSessionTemplate sqlSession() throws Exception {
 		return new SqlSessionTemplate(sqlSessionFactory());
 	}
+	@Bean
+	public IdCheckCommand idCheckCommand() {
+		return new IdCheckCommand();
+	}
+	@Bean
+	public EmailAuthCommand emailAuthCommand() {
+		return new EmailAuthCommand();
+	}
+	
+	
 	
 	
 	
