@@ -1,6 +1,8 @@
 package com.koreait.file.command;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -15,13 +17,14 @@ public class InsertBoardCommand implements BoardCommand {
 
 	@Override
 	public void execute(SqlSession sqlSession, Model model) {
-
+		
 		Map<String, Object> map = model.asMap();
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest)map.get("multipartRequest");
 		
 		String writer = multipartRequest.getParameter("writer");
 		String title = multipartRequest.getParameter("title");
 		String content = multipartRequest.getParameter("content");
+		
 		/*
 			<input type="file" name="filename"> : 단일 파일 첨부
 			MultipartFile file = multipartRequest.getFile("filename");
@@ -30,17 +33,17 @@ public class InsertBoardCommand implements BoardCommand {
 			<input type="file" name="files" multiple> : 다중 파일 첨부
 			List<MultipartFile> files = multipartRequest.getFiles("files");
 		*/
+		
 		List<MultipartFile> files = multipartRequest.getFiles("files");
 		
 		BoardDAO boardDAO = sqlSession.getMapper(BoardDAO.class);
 		
-		for (MultipartFile file : files) {  // for만 빼면 단일첨부
+		for (MultipartFile file : files) {
 			
 			if (file != null && !file.isEmpty()) {
-				
+
 				// 올릴 때 파일명
 				String originalFilename = file.getOriginalFilename();
-				System.out.println("첨부파일명: " + originalFilename);
 				
 				// 서버에 저장할 파일명
 				// 파일명의 중복 방지 대책이 필요
@@ -65,6 +68,11 @@ public class InsertBoardCommand implements BoardCommand {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				
+				// DB에 넣는 파일명을 인코딩 처리
+				try {
+					uploadFilename = URLEncoder.encode(uploadFilename, "utf-8");
+				} catch (Exception e) { }
 				
 				// DB에 데이터 저장
 				boardDAO.insertBoard(writer, title, content, uploadFilename);

@@ -27,17 +27,18 @@ public class DownloadCommand {
 		HttpServletResponse response = (HttpServletResponse)map.get("response");
 		
 		String realPath = request.getServletContext().getRealPath("resources/archive");
-		
+
 		// DB와 서버에 저장된 파일명
 		String filename = request.getParameter("filename");
+		System.out.println(filename);
 		
-		// 파일명 원상 복구 (선택 작업)
+		// 파일명 원상 복구 (선택)
 		String extension = filename.substring( filename.lastIndexOf(".") + 1 );
 		String originalFilename = filename.substring( 0, filename.lastIndexOf("_") );
 		String downloadFilename = originalFilename + "." + extension;
 		
 		// 다운로드 할 File 생성
-		File download = new File(realPath, filename);  //  서버에서 찾아야 하는 파일명을 작성
+		File download = new File(realPath, filename);  // 서버에서 찾아야 하는 파일명을 작성
 		
 		// 스트림 준비
 		BufferedInputStream bis = null;
@@ -46,8 +47,9 @@ public class DownloadCommand {
 		try {
 			
 			// response 다운로드 처리
-			response.setHeader("Content-Type", "application/x-msdownload");
+			response.setHeader("Content-Type", "applicaion/x-msdownload");
 			response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(downloadFilename, "utf-8"));
+			// response.setHeader("Content-Disposition", "attachment; filename=" + downloadFilename);
 			response.setHeader("Content-Length", download.length() + "");
 			
 			// 서버에 저장된 download할 파일을 읽는 스트림
