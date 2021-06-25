@@ -9,5 +9,7 @@ public interface MemberDAO {
 	public Member login(Member member);
 	public int leave(long no);
 	public int updateMember(Member member);
+	public int updatePw(Member member);
+	public Member findId(String email);
 	
 }

@@ -35,5 +35,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		     , EMAIL = #{email}
 		 WHERE NO = #{no}
 	</update>
+	
+	<update id="updatePw">
+		UPDATE MEMBER
+		   SET PW = #{pw}
+		 WHERE NO = #{no}
+	</update>
+	
+	<select id="findId" resultType="com.koreait.member.dto.Member">
+		SELECT ID, REGDATE
+		  FROM MEMBER
+		 WHERE EMAIL = #{email}
+	</select>
 
 </mapper>

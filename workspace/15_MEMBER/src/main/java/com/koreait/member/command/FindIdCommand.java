@@ -9,28 +9,22 @@ import org.springframework.ui.Model;
 
 import com.koreait.member.dao.MemberDAO;
 import com.koreait.member.dto.Member;
-import com.koreait.member.util.SecurityUtils;
 
-public class LoginCommand implements MemberCommand {
+public class FindIdCommand implements MemberCommand {
 
 	@Override
 	public void execute(SqlSession sqlSession, Model model) {
-		
+
 		Map<String, Object> map = model.asMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		
-		String id = request.getParameter("id");
-		String pw = request.getParameter("pw");
-		
-		Member member = new Member();
-		member.setId(id);
-		member.setPw(SecurityUtils.encodeBase64(pw));  // 암호화 된 pw
+		String email = request.getParameter("email");
 		
 		MemberDAO memberDAO = sqlSession.getMapper(MemberDAO.class);
-		Member loginUser = memberDAO.login(member);
+		Member findUser = memberDAO.findId(email);
 		
-		if (loginUser != null) {
-			request.getSession().setAttribute("loginUser", loginUser);
+		if (findUser != null) {
+			model.addAttribute("findUser", findUser);  // 검색 결과를 표시할 JSP로 전달하기 위해서		
 		}
 		
 	}

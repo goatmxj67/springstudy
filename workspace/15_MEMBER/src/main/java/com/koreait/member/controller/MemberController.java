@@ -10,15 +10,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreait.member.command.EmailAuthCommand;
+import com.koreait.member.command.FindIdCommand;
 import com.koreait.member.command.IdCheckCommand;
 import com.koreait.member.command.JoinCommand;
 import com.koreait.member.command.LeaveCommand;
 import com.koreait.member.command.LoginCommand;
 import com.koreait.member.command.LogoutCommand;
+import com.koreait.member.command.PresentPwCheckCommand;
 import com.koreait.member.command.UpdateMemberCommand;
+import com.koreait.member.command.UpdatePwCommand;
+import com.koreait.member.dto.Member;
 
 @Controller
 public class MemberController {
@@ -31,6 +36,9 @@ public class MemberController {
 	private LogoutCommand logoutCommand;
 	private LeaveCommand leaveCommand;
 	private UpdateMemberCommand updateMemberCommand;
+	private PresentPwCheckCommand presentPwCheckCommand;
+	private UpdatePwCommand updatePwCommand;
+	private FindIdCommand findIdCommand;
 
 	public MemberController(SqlSession sqlSession,
 							IdCheckCommand idCheckCommand,
@@ -39,7 +47,10 @@ public class MemberController {
 							LoginCommand loginCommand,
 							LogoutCommand logoutCommand,
 							LeaveCommand leaveCommand,
-							UpdateMemberCommand updateMemberCommand) {
+							UpdateMemberCommand updateMemberCommand,
+							PresentPwCheckCommand presentPwCheckCommand,
+							UpdatePwCommand updatePwCommand,
+							FindIdCommand findIdCommand) {
 		super();
 		this.sqlSession = sqlSession;
 		this.idCheckCommand = idCheckCommand;
@@ -49,9 +60,12 @@ public class MemberController {
 		this.logoutCommand = logoutCommand;
 		this.leaveCommand = leaveCommand;
 		this.updateMemberCommand = updateMemberCommand;
+		this.presentPwCheckCommand = presentPwCheckCommand;
+		this.updatePwCommand = updatePwCommand;
+		this.findIdCommand = findIdCommand;
 	}
 
-	@GetMapping(value="/")
+	@GetMapping(value= {"/", "index.do"})
 	public String index() {
 		return "index";
 	}
@@ -124,9 +138,37 @@ public class MemberController {
 		return index();  // return "redirect:/";
 	}
 	
+	@PostMapping(value="presentPwCheck.do",
+				 produces="application/json; charset=utf-8")
+	@ResponseBody
+	public Map<String, Boolean> presentPwCheck(@RequestBody Member member,
+											   HttpSession session,
+											   Model model) {
+		model.addAttribute("session", session);
+		model.addAttribute("member", member);
+		return presentPwCheckCommand.execute(model);
+	}
 	
+	@PostMapping(value="updatePw.do")
+	public String updatePw(HttpServletRequest request,
+						   Model model) {
+		model.addAttribute("request", request);
+		updatePwCommand.execute(sqlSession, model);
+		return index();
+	}
 	
+	@GetMapping(value="findIdPage.do")
+	public String findIdPage() {
+		return "member/findId";
+	}
 	
+	@PostMapping(value="findId.do")
+	public String findId(HttpServletRequest request,
+			   			 Model model) {
+		model.addAttribute("request", request);
+		findIdCommand.execute(sqlSession, model);
+		return "member/findIdResult";
+	}
 	
 	
 }

@@ -12,31 +12,30 @@ import com.koreait.member.dao.MemberDAO;
 import com.koreait.member.dto.Member;
 import com.koreait.member.util.SecurityUtils;
 
-public class UpdateMemberCommand implements MemberCommand {
+public class UpdatePwCommand implements MemberCommand {
 
 	@Override
 	public void execute(SqlSession sqlSession, Model model) {
-		
+
 		Map<String, Object> map = model.asMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		
-		String name = request.getParameter("name");
-		String email = request.getParameter("email");
+		String pw = request.getParameter("pw");
 		long no = Long.parseLong(request.getParameter("no"));
 		
 		Member member = new Member();
-		member.setName(SecurityUtils.xss(name));
-		member.setEmail(email);
+		member.setPw(SecurityUtils.encodeBase64(pw));
 		member.setNo(no);
 		
 		MemberDAO memberDAO = sqlSession.getMapper(MemberDAO.class);
-		int count = memberDAO.updateMember(member);
+		int count = memberDAO.updatePw(member);
 		
 		if (count > 0) {
 			HttpSession session = request.getSession();
 			Member loginUser = (Member)session.getAttribute("loginUser");
-			loginUser.setName(name);
-			loginUser.setEmail(email);
+			if (loginUser != null) {
+				loginUser.setPw(SecurityUtils.encodeBase64(pw));
+			}
 		}
 		
 	}
