@@ -23,13 +23,10 @@ public class JoinCommand implements MemberCommand {
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		
-		// pw의 암호화
-		String encodedPw = Encript.base64(pw);
-		
 		Member member = new Member();
 		member.setId(id);
-		member.setPw(encodedPw);
-		member.setName(name);
+		member.setPw(SecurityUtils.encodeBase64(pw));  // pw의 암호화
+		member.setName(SecurityUtils.xss(name));  // name의 xss처리
 		member.setEmail(email);
 		
 		MemberDAO memberDAO = sqlSession.getMapper(MemberDAO.class);

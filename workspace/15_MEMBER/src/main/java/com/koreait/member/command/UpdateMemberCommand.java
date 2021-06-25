@@ -15,7 +15,7 @@ public class UpdateMemberCommand implements MemberCommand {
 
 	@Override
 	public void execute(SqlSession sqlSession, Model model) {
-
+		
 		Map<String, Object> map = model.asMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		
@@ -24,7 +24,7 @@ public class UpdateMemberCommand implements MemberCommand {
 		long no = Long.parseLong(request.getParameter("no"));
 		
 		Member member = new Member();
-		member.setName(name);
+		member.setName(SecurityUtils.xss(name));
 		member.setEmail(email);
 		member.setNo(no);
 		
@@ -37,7 +37,7 @@ public class UpdateMemberCommand implements MemberCommand {
 			loginUser.setName(name);
 			loginUser.setEmail(email);
 		}
-	
+		
 	}
 
 }

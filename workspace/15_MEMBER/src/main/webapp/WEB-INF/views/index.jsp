@@ -21,12 +21,12 @@
 				}
 			})
 		}
-		function fn_leave() {
+		function fn_leave(){
 			$('#leave_link').click(function(){
-				if (confirm('탈퇴할까요?')) {
+				if (confirm('탈퇴할까요?')){
 					location.href = 'leave.do';
 				}
-			});
+			})
 		}
 	</script>
 	<style>
@@ -43,6 +43,7 @@
 		회원번호 : ${loginUser.no}<br>
 		아이디 : ${loginUser.id}<br>
 		비밀번호 : ${loginUser.pw}<br>
+		이름 : ${loginUser.name}<br>
 		이메일 : ${loginUser.email}<br>
 		가입일 : ${loginUser.regdate}<br><br>
 		<a href="logout.do">로그아웃</a><br>

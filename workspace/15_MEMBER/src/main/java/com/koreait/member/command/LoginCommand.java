@@ -14,19 +14,16 @@ public class LoginCommand implements MemberCommand {
 
 	@Override
 	public void execute(SqlSession sqlSession, Model model) {
-
+		
 		Map<String, Object> map = model.asMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
 		
-		// 암호화 된 pw
-		String encodedPw = Encript.base64(pw);
-		
 		Member member = new Member();
 		member.setId(id);
-		member.setPw(encodedPw);
+		member.setPw(SecurityUtils.encodeBase64(pw));  // 암호화 된 pw
 		
 		MemberDAO memberDAO = sqlSession.getMapper(MemberDAO.class);
 		Member loginUser = memberDAO.login(member);
@@ -34,7 +31,7 @@ public class LoginCommand implements MemberCommand {
 		if (loginUser != null) {
 			request.getSession().setAttribute("loginUser", loginUser);
 		}
-	
+		
 	}
 
 }
