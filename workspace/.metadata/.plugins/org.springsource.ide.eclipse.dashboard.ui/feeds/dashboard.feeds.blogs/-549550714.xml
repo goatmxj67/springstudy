@@ -5,7 +5,22 @@
   <link rel="self" href="https://spring.io/blog.atom" />
   <id>http://spring.io/blog.atom</id>
   <icon>https://spring.io/favicon.ico</icon>
-  <updated>2021-06-24T19:00:00Z</updated>
+  <updated>2021-06-25T02:00:00Z</updated>
+  <entry>
+    <title>Spring Boot 2.5.2 is now available</title>
+    <link rel="alternate" href="https://spring.io/blog/2021/06/24/spring-boot-2-5-2-is-now-available" />
+    <category term="releases" label="Releases" />
+    <author>
+      <name>Phil Webb</name>
+    </author>
+    <id>tag:spring.io,2021-06-25:4478</id>
+    <updated>2021-06-25T02:00:00Z</updated>
+    <content type="html">&lt;p&gt;On behalf of the team and everyone who has contributed, I&amp;rsquo;m happy to announce that Spring Boot &lt;code&gt;2.5.2&lt;/code&gt; has been released and is now available from Maven Central.&lt;/p&gt;
+&lt;p&gt;This release includes &lt;a href="https://github.com/spring-projects/spring-boot/releases/tag/v2.5.2"&gt;53 bug fixes, documentation improvements, and dependency upgrades&lt;/a&gt;. Thanks to all those who have contributed with issue reports and pull requests.&lt;/p&gt;&lt;h3&gt;&lt;a href="#how-can-you-help" class="anchor" name="how-can-you-help"&gt;&lt;/a&gt;How can you help?&lt;/h3&gt;
+&lt;p&gt;If you&amp;rsquo;re interested in helping out, check out the &lt;a href="https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution"&gt;&amp;ldquo;ideal for contribution&amp;rdquo; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask on &lt;a href="https://stackoverflow.com"&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href="https://stackoverflow.com/tags/spring-boot"&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt; or chat with the community on &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://spring.io/projects/spring-boot/"&gt;Project Page&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot"&gt;GitHub&lt;/a&gt; | &lt;a href="https://github.com/spring-projects/spring-boot/issues"&gt;Issues&lt;/a&gt; | &lt;a href="https://docs.spring.io/spring-boot/docs/2.5.2/reference/html"&gt;Documentation&lt;/a&gt; | &lt;a href="https://stackoverflow.com/questions/tagged/spring-boot"&gt;Stack Overflow&lt;/a&gt; | &lt;a href="https://gitter.im/spring-projects/spring-boot"&gt;Gitter&lt;/a&gt;&lt;/p&gt;
+&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
+  </entry>
   <entry>
     <title>A Bootiful Podcast: webassembly, IoT, data science, and Java guru Brian Sletten</title>
     <link rel="alternate" href="https://spring.io/blog/2021/06/24/a-bootiful-podcast-webassembly-iot-data-science-and-java-guru-brian-sletten" />
@@ -616,34 +631,6 @@ class DynamicRouteTests {
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;!-- rendered by Sagan Renderer Service --&gt;</content>
-  </entry>
-  <entry>
-    <title>This Week in Spring - June 1st, 2021</title>
-    <link rel="alternate" href="https://spring.io/blog/2021/06/01/this-week-in-spring-june-1st-2021" />
-    <category term="engineering" label="Engineering" />
-    <author>
-      <name>Josh Long</name>
-    </author>
-    <id>tag:spring.io,2021-06-01:4458</id>
-    <updated>2021-06-01T21:00:00Z</updated>
-    <content type="html">&lt;p&gt;Hi, Spring fans! Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! How&amp;rsquo;re you doing? I&amp;rsquo;m doing well! I hope you&amp;rsquo;re doing well, too. Can you believe we&amp;rsquo;ve just entered the month of June 2021? WHERE HAS THIS YEAR GONE ALREADY! It&amp;rsquo;s insane. But, the march of Spring continues, and with each passing week a ton of new stuff to talk about arrives. Let&amp;rsquo;s get into it!&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;In last week&amp;rsquo;s episode of &lt;a href="https://spring.io/blog/2021/05/27/a-bootiful-podcast-micrometer-lead-tommy-ludwig"&gt;&lt;em&gt;A Bootiful Podcast&lt;/em&gt;, I talked to Micrometer-lead Tommy Ludwig&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://techcommunity.microsoft.com/t5/apps-on-azure/announcing-general-availability-of-azure-spring-cloud-in-the/ba-p/2399222"&gt;Announcing the general availability of the Azure Spring Cloud Terraform provider&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/chanezon/status/1397236369752219653?s=12"&gt;Cool to see an Azure Spring Cloud success story in the MSBuild keynote&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://developer.okta.com/blog/2021/06/01/kubernetes-spring-boot-jhipster"&gt;Get your reactive microservices to Kubernetes with Spring Boot and JHipster&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/cote/status/1397932277863108610"&gt;Michael Cot? asks on Twitter: What&amp;rsquo;s an API Gateway and why would you use it? Also, what does &amp;ldquo;business value&amp;rdquo; mean here? See the full interview with Rita Marinachi, Chris Sterling, and me to hear even more and also a how API gateways fit with service meshes.&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://www.mscharhag.com/spring/rest-api-error-messages"&gt;Providing useful API error messages with Spring Boot&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://spring.io/blog/2021/05/28/spring-cloud-2020-0-3-aka-ilford-is-available"&gt;Spring Cloud 2020.0.3 (aka Ilford) Is Available&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://redmonk.com/videos/what-is-distributed-api-management-how-to-get-started-with-api-portal-for-vmware-tanzu/"&gt;Spring Cloud Gateway for Kubernetes lead Chris Sterling on Redmonk&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://piotrminkowski.com/2021/05/26/spring-microservices-security-best-practices/"&gt;Spring Microservices Security Best Practices&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://twitter.com/maciejwalkowiak/status/1398038926011637760?s=20"&gt;Spring PetClinic Data JDBC upgraded to Java 16. Records do make a difference &lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;Check out this terminal application for the Spring Initializr: &lt;a href="https://github.com/themkat/spring-starter-terminal"&gt;Spring Starter Terminal&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href="https://github.com/zeldigas/Reasonable-Test-Logs"&gt;This is a reasonable JUnit test runner that hides the green test result logs so as to bring the errors to sharp relief&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;I found this old comic book about the amazing adventures of Java mascot Duke, and it is &lt;em&gt;well&lt;/em&gt; worth a read: &lt;a href="https://github.com/jcp-org/jcp-ec/blob/master/files/AmazingAdventuresOfDuke.pdf"&gt;jcp-ec/AmazingAdventuresOfDuke.pdf at master ¡¤ jcp-org/jcp-ec ¡¤ GitHub&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;this is an interesting blog on &lt;a href="https://reflectoring.io/spring-webclient/"&gt;sending HTTP requests with &lt;code&gt;WebClient&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 &lt;!-- rendered by Sagan Renderer Service --&gt;</content>
   </entry>
 </feed>
