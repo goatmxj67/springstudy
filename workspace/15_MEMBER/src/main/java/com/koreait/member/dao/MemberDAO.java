@@ -6,5 +6,8 @@ public interface MemberDAO {
 
 	public int idCheck(String id);
 	public int join(Member member);
+	public Member login(Member member);
+	public int leave(long no);
+	public int updateMember(Member member);
 	
 }

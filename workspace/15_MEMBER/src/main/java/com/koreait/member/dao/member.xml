@@ -14,6 +14,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="join">
 		INSERT INTO MEMBER
 		VALUES (MEMBER_SEQ.NEXTVAL, #{id}, #{pw}, #{name}, #{email}, SYSDATE)
-	</insert>			
+	</insert>
+	
+	<select id="login" resultType="com.koreait.member.dto.Member">
+		SELECT NO, ID, PW, NAME, EMAIL, REGDATE
+		  FROM MEMBER
+		 WHERE ID = #{id}
+		   AND PW = #{pw}
+	</select>		
+	
+	<delete id="leave">
+		DELETE
+		  FROM MEMBER
+		 WHERE NO = #{no}
+	</delete>
+	
+	<update id="updateMember">
+		UPDATE MEMBER
+		   SET NAME = #{name}
+		     , EMAIL = #{email}
+		 WHERE NO = #{no}
+	</update>
 
 </mapper>
