@@ -10,6 +10,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import com.koreait.member.command.EmailAuthCommand;
 import com.koreait.member.command.IdCheckCommand;
+import com.koreait.member.command.JoinCommand;
 
 @Configuration
 public class BeanConfiguration {
@@ -42,7 +43,10 @@ public class BeanConfiguration {
 	public EmailAuthCommand emailAuthCommand() {
 		return new EmailAuthCommand();
 	}
-	
+	@Bean
+	public JoinCommand joinCommand() {
+		return new JoinCommand();
+	}
 	
 	
 	

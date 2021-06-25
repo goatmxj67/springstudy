@@ -8,10 +8,12 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreait.member.command.EmailAuthCommand;
 import com.koreait.member.command.IdCheckCommand;
+import com.koreait.member.command.JoinCommand;
 
 @Controller
 public class MemberController {
@@ -19,14 +21,17 @@ public class MemberController {
 	private SqlSession sqlSession;
 	private IdCheckCommand idCheckCommand;
 	private EmailAuthCommand emailAuthCommand;
+	private JoinCommand joinCommand;
 
 	public MemberController(SqlSession sqlSession,
 							IdCheckCommand idCheckCommand,
-							EmailAuthCommand emailAuthCommand) {
+							EmailAuthCommand emailAuthCommand,
+							JoinCommand joinCommand) {
 		super();
 		this.sqlSession = sqlSession;
 		this.idCheckCommand = idCheckCommand;
 		this.emailAuthCommand = emailAuthCommand;
+		this.joinCommand = joinCommand;
 	}
 
 	@GetMapping(value="/")
@@ -56,6 +61,16 @@ public class MemberController {
 		model.addAttribute("request", request);
 		return emailAuthCommand.execute(sqlSession, model);
 	}
+	
+	@PostMapping(value="join.do")
+	public String join(HttpServletRequest request,
+					   Model model) {
+		model.addAttribute("request", request);
+		joinCommand.execute(sqlSession, model);
+		return "redirect:/";
+	}
+	
+	
 	
 	
 	
