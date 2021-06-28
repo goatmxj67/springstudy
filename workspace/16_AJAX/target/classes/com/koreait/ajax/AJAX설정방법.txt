@@ -83,7 +83,7 @@ AJAX 활용한 CRUD 작성
 	    <version>2.9.4</version>
 	</dependency>
 
-7. lombok 설치한다.
+7. lombok 설치한다.(설치 끝나고 sts 재시작)
   1) lombok.jar 더블 클릭
      - Specify Location
      - 사용 중인 STS.exe 선택
