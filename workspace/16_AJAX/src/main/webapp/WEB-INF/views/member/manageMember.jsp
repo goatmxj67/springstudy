@@ -7,7 +7,7 @@
 	<title>Insert title here</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
-		$(document).ready(function(){
+		$(document).ready(function() {
 			fn_selectMemberList();
 			fn_paging();
 			fn_selectMemberByNo();
@@ -16,10 +16,10 @@
 			fn_deleteMember();
 		});
 		// 1. 회원 목록
-		var page = 1;  // 전역변수 page는 페이징을 클릭하면 fn_paging에 의해서 값이 변함
+		var page = 1;  // 전역변수 page는 페이징을 클릭하면 fn_paging()에 의해서 값이 변함
 		function fn_selectMemberList() {
 			var obj = {
-				page: page  // 'page': page 가능 / 'page': 'page' 불가능 (jquery 문법)
+				page: page
 			};
 			$.ajax({
 				url: 'selectMemberList.do',
@@ -32,18 +32,18 @@
 					// 1. 목록 만들기
 					
 					// 1) 기존 회원 목록을 모두 지움
-					$('#member_list').empty();  
+					$('#member_list').empty();
 					
 					// 2) 회원 목록을 만듬
 					if (resultMap.exists) {
 						// resultMap.list 출력
 						$.each(resultMap.list, function(i, member){
 							$('<tr>')
-							.append('<td>' + member.id + '</td>')  // .append('<td>').text(member.id)
-							.append('<td>' + member.name + '</td>')
-							.append('<td>' + member.address + '</td>')
-							.append('<td>' + member.gender + '</td>')
-							.append('<td><input type="button" value="조회" id="view_btn"></td>')
+							.append( $('<td>').text(member.id) )
+							.append( $('<td>').text(member.name) )
+							.append( $('<td>').text(member.address) )
+							.append( $('<td>').text(member.gender) )
+							.append( $('<td>').html('<input type="hidden" name="no" id="no" value="' + member.no + '"><input type="button" value="조회" id="view_btn">') )
 							.appendTo('#member_list');
 						});
 					} else {
@@ -58,7 +58,7 @@
 					// 1) 기존 페이징 초기화
 					$('#paging').empty();
 					
-					// 2) 이전
+					// 2) 이전('◀')
 					if (paging.beginPage <= paging.pagePerBlock) {  // 이전('◀')이 없음(1블록)
 						// class
 						// 1. disable : color silver
@@ -113,27 +113,49 @@
 					}
 					
 				}
-				
 			});
 		}
 		// 2. 회원 목록 페이징(페이징 링크 처리)
 		function fn_paging() {
 			$('body').on('click', '.previous_block', function(){
-				page = $(this).attr('data-page');  // data('page')도 가능
+				page = $(this).attr('data-page');
 				fn_selectMemberList();
 			});
 			$('body').on('click', '.go_page', function(){
-				page = $(this).attr('data-page');  // data('page')도 가능
+				page = $(this).attr('data-page');
 				fn_selectMemberList();
 			});
 			$('body').on('click', '.next_block', function(){
-				page = $(this).attr('data-page');  // data('page')도 가능
+				page = $(this).attr('data-page');
 				fn_selectMemberList();
 			});
 		}
 		// 3. 회원 정보 보기
 		function fn_selectMemberByNo() {
-			
+			$('body').on('click', '#view_btn', function(){
+				var obj = {
+					no: $(this).prev().val()
+					// no: $(this).siblings('#no').val()
+				};
+				$.ajax({
+					url: 'selectMemberByNo.do',
+					type: 'post',
+					contentType: 'application/json',
+					data: JSON.stringify(obj),
+					dataType: 'json',
+					success: function(resultMap) {
+						if (resultMap.exists) {
+							$('input:text[name="id"]').val(resultMap.member.id);
+							$('input:text[name="name"]').val(resultMap.member.name);
+							$('input:text[name="address"]').val(resultMap.member.address);
+							$('input:radio[name="gender"][value="' + resultMap.member.gender + '"]').prop('checked', true);
+							$('#view_area input:hidden[name="no"]').val(resultMap.member.no);
+						} else {
+							alert(obj.no + '번 회원 정보가 없습니다.');	
+						}
+					}
+				});
+			});
 		}
 		// 4. 회원 삽입
 		function fn_insertMember() {
@@ -154,14 +176,9 @@
 						if (resultMap.result > 0) {
 							alert('새로운 회원이 등록되었습니다.');
 							fn_selectMemberList();
-						} 
+						}
 					},
-					error: function(xhr, testStatus, errorThrown) {
-						/* 
-						if (xhr.status == 1001) {
-							alert(xhr.responseText);
-						} 
-						*/
+					error: function(xhr, textStatus, errorThrown) {
 						switch (xhr.status) {
 						case 1001:
 							alert(xhr.responseText);
@@ -179,7 +196,6 @@
 		function fn_deleteMember() {
 			
 		}
-		
 	</script>
 	<style>
 		#paging {
@@ -208,14 +224,16 @@
 	
 	<h1>회원 관리</h1>
 	
-	아이디 <input type="text" name="id" id="id"><br>
-	이름 <input type="text" name="name" id="name"><br>
-	주소 <input type="text" name="address" id="address"><br>
-	성별
-	<input type="radio" name="gender" value="남" id="male"><label for="male">남</label>
-	<input type="radio" name="gender" value="여" id="female"><label for="female">여</label>
-	<input type="button" value="등록" id="insert_btn"><br>
-	
+	<div id="view_area">
+		아이디 <input type="text" name="id" id="id"><br>
+		이름 <input type="text" name="name" id="name"><br>
+		주소 <input type="text" name="address" id="address"><br>
+		성별
+		<input type="radio" name="gender" value="남" id="male"><label for="male">남</label>
+		<input type="radio" name="gender" value="여" id="female"><label for="female">여</label><br>
+		<input type="hidden" name="no">
+		<input type="button" value="등록" id="insert_btn"><br>
+	</div>
 	<hr>
 	
 	<table border="1">
@@ -229,7 +247,7 @@
 			</tr>
 		</thead>
 		<tbody id="member_list">
-			
+		
 		</tbody>
 		<tfoot>
 			<tr>
@@ -239,12 +257,6 @@
 			</tr>
 		</tfoot>
 	</table>
-	
-	
-	
-	
-	
-	
 	
 </body>
 </html>

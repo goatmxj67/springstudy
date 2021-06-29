@@ -10,6 +10,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.koreait.ajax.command.InsertMemberCommand;
 import com.koreait.ajax.command.SelectMemberListCommand;
+import com.koreait.ajax.command.SelectMemberViewCommand;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -53,6 +54,14 @@ public class BeanConfiguration {
 	public SelectMemberListCommand selectMemberListCommand() {
 		return new SelectMemberListCommand();
 	}
+	
+	@Bean
+	public SelectMemberViewCommand selectMemberViewCommand() {
+		return new SelectMemberViewCommand();
+	}
+	
+	
+	
 	
 	
 	

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.koreait.ajax.command.InsertMemberCommand;
 import com.koreait.ajax.command.SelectMemberListCommand;
+import com.koreait.ajax.command.SelectMemberViewCommand;
 import com.koreait.ajax.dto.Member;
 import com.koreait.ajax.dto.Page;
 
@@ -26,15 +27,18 @@ public class MemberRestController {
 	private SqlSession sqlSession;
 	private InsertMemberCommand insertMemberCommand;
 	private SelectMemberListCommand selectMemberListCommand;
+	private SelectMemberViewCommand selectMemberViewCommand;
 	
 	// constructor
 	@Autowired
 	public MemberRestController(SqlSession sqlSession,
 								InsertMemberCommand insertMemberCommand,
-								SelectMemberListCommand selectMemberListCommand) {
+								SelectMemberListCommand selectMemberListCommand,
+								SelectMemberViewCommand selectMemberViewCommand) {
 		this.sqlSession = sqlSession;
 		this.insertMemberCommand = insertMemberCommand;
 		this.selectMemberListCommand = selectMemberListCommand;
+		this.selectMemberViewCommand = selectMemberViewCommand;
 	}
 	
 	@PostMapping(value="insertMember.do",
@@ -54,6 +58,17 @@ public class MemberRestController {
 		model.addAttribute("page", page.getPage());
 		return selectMemberListCommand.execute(sqlSession, model);
 	}
+	
+	@PostMapping(value="selectMemberByNo.do",
+				 produces="application/json; charset=utf-8")
+	public Map<String, Object> selectMemberByNo(@RequestBody Member member,
+												Model model) {
+		model.addAttribute("no", member.getNo());
+		return selectMemberViewCommand.execute(sqlSession, model);
+	}
+	
+	
+	
 	
 	
 	

@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 
 import com.koreait.ajax.dao.MemberDAO;
 import com.koreait.ajax.dto.Member;
+import com.koreait.ajax.dto.Page;
+import com.koreait.ajax.util.PagingUtils;
 
 public class SelectMemberListCommand implements MemberCommand {
 
@@ -19,32 +21,11 @@ public class SelectMemberListCommand implements MemberCommand {
 		int page = (int)map.get("page");
 		
 		MemberDAO memberDAO = sqlSession.getMapper(MemberDAO.class);
-		
 		int totalRecord = memberDAO.getTotalMemberCount();
-		int recordPerPage = 5;
-		int beginRecord = (page - 1) * recordPerPage + 1;
-		int endRecord = beginRecord + recordPerPage - 1;
-		endRecord = endRecord < totalRecord ? endRecord : totalRecord;
 		
-		int totalPage = (totalRecord / recordPerPage) + (totalRecord % recordPerPage > 0 ? 1 : 0);
-		int pagePerBlock = 3;
-		int beginPage = ((page - 1) / pagePerBlock) * pagePerBlock + 1;
-		int endPage = beginPage + pagePerBlock - 1;
-		endPage = endPage < totalPage ? endPage : totalPage;
+		Page paging = PagingUtils.getPage(totalRecord, page);
 		
-		// manageMember.jsp로 전달할 Map
-		Map<String, Integer> paging = new HashMap<>();
-		paging.put("totalRecord", totalRecord);
-		paging.put("page", page);
-		paging.put("totalPage", totalPage);
-		paging.put("pagePerBlock", pagePerBlock);
-		paging.put("beginPage", beginPage);
-		paging.put("endPage", endPage);
-		
-		Map<String, Integer> pagingMap = new HashMap<>();
-		pagingMap.put("beginRecord", beginRecord);
-		pagingMap.put("endRecord", endRecord);
-		List<Member> list = memberDAO.selectMemberList(pagingMap);
+		List<Member> list = memberDAO.selectMemberList(paging);
 		// System.out.println("회원 수: " + list.size());
 		
 		Map<String, Object> resultMap = new HashMap<>();
