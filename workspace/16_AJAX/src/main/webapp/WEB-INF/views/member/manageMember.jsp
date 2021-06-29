@@ -16,10 +16,10 @@
 			fn_deleteMember();
 		});
 		// 1. 회원 목록
-		var page = 1;
+		var page = 1;  // 전역변수 page는 페이징을 클릭하면 fn_paging에 의해서 값이 변함
 		function fn_selectMemberList() {
 			var obj = {
-				page: page
+				page: page  // 'page': page 가능 / 'page': 'page' 불가능 (jquery 문법)
 			};
 			$.ajax({
 				url: 'selectMemberList.do',
@@ -28,7 +28,13 @@
 				data: JSON.stringify(obj),
 				dataType: 'json',
 				success: function(resultMap) {
-					$('#member_list').empty();  // 기존 회원 목록을 모두 지움
+					
+					// 1. 목록 만들기
+					
+					// 1) 기존 회원 목록을 모두 지움
+					$('#member_list').empty();  
+					
+					// 2) 회원 목록을 만듬
 					if (resultMap.exists) {
 						// resultMap.list 출력
 						$.each(resultMap.list, function(i, member){
@@ -45,13 +51,85 @@
 						.append('<td colspan="5">등록된 회원이 없습니다.</td>')
 						.appendTo('#member_list');
 					}
+					
+					// 2. 페이징 만들기
+					var paging = resultMap.paging;
+					
+					// 1) 기존 페이징 초기화
+					$('#paging').empty();
+					
+					// 2) 이전
+					if (paging.beginPage <= paging.pagePerBlock) {  // 이전('◀')이 없음(1블록)
+						// class
+						// 1. disable : color silver
+						$('<div>').addClass('disable').text('◀').appendTo('#paging');
+					} else {  // 이전('◀')이 있음
+						// class
+						// 1. previous_block : click 이벤트에서 활용
+						// 2. link : cursor pointer
+						$('<div>')
+						.addClass('previous_block').addClass('link')
+						.attr('data-page', paging.beginPage - 1)
+						.text('◀')
+						.appendTo('#paging');
+					}
+					// 3) 1 2 3 4 5
+					for (let p = paging.beginPage; p <= paging.endPage; p++) {
+						if (p == paging.page) {  // 표시된 페이지가 현재 페이지(링크 없음)
+							// class
+							// 1. now_page : color limegreen
+							$('<div>')
+							.addClass('now_page')
+							.text(p)
+							.appendTo('#paging');
+						} else {
+							// class
+							// 1. go_page : click 이벤트에서 활용
+							// 2. link : cursor pointer
+							$('<div>')
+							.addClass('go_page').addClass('link')
+							.attr('data-page', p)
+							.text(p)
+							.appendTo('#paging');
+						}
+					}
+					// 4) 다음('▶')
+					if (paging.endPage == paging.totalPage) {  // 다음('▶')이 없음(마지막 블록)
+						// class
+						// 1. disable : color silver
+						$('<div>')
+						.addClass('disable')
+						.text('▶')
+						.appendTo('#paging');
+					} else {  // 다음('▶')이 있음
+						// class
+						// 1. next_block : click 이벤트에서 활용
+						// 2. link : cursor pointer
+						$('<div>')
+						.addClass('next_block').addClass('link')
+						.attr('data-page', paging.endPage + 1)
+						.text('▶')
+						.appendTo('#paging');
+					}
+					
 				}
 				
 			});
 		}
-		// 2. 회원 목록 페이징
+		// 2. 회원 목록 페이징(페이징 링크 처리)
 		function fn_paging() {
-			
+			$('body').on('click', '.previous_block', function(){
+				page = $(this).attr('data-page');  // data('page')도 가능
+				fn_selectMemberList();
+			});
+			$('body').on('click', '.go_page', function(){
+				page = $(this).attr('data-page');  // data('page')도 가능
+				fn_selectMemberList();
+			});
+			$('body').on('click', '.next_block', function(){
+				page = $(this).attr('data-page');  // data('page')도 가능
+				fn_selectMemberList();
+			});
 		}
 		// 3. 회원 정보 보기
 		function fn_selectMemberByNo() {
@@ -103,6 +181,28 @@
 		}
 		
 	</script>
+	<style>
+		#paging {
+			width: 50%;
+			margin: 0 auto;
+			display: flex;
+			justify-content: space-between;
+			text-align: center;
+		}
+		#paging div {
+			width: 40px;
+			height: 20px;
+		}
+		.disable {
+			color: silver;
+		}
+		.link {
+			cursor: pointer;
+		}
+		.now_page {
+			color: limegreen;
+		}
+	</style>
 </head>
 <body>
 	

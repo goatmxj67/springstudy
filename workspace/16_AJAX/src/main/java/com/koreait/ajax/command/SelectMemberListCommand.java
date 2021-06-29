@@ -26,15 +26,31 @@ public class SelectMemberListCommand implements MemberCommand {
 		int endRecord = beginRecord + recordPerPage - 1;
 		endRecord = endRecord < totalRecord ? endRecord : totalRecord;
 		
+		int totalPage = (totalRecord / recordPerPage) + (totalRecord % recordPerPage > 0 ? 1 : 0);
+		int pagePerBlock = 3;
+		int beginPage = ((page - 1) / pagePerBlock) * pagePerBlock + 1;
+		int endPage = beginPage + pagePerBlock - 1;
+		endPage = endPage < totalPage ? endPage : totalPage;
+		
+		// manageMember.jsp로 전달할 Map
+		Map<String, Integer> paging = new HashMap<>();
+		paging.put("totalRecord", totalRecord);
+		paging.put("page", page);
+		paging.put("totalPage", totalPage);
+		paging.put("pagePerBlock", pagePerBlock);
+		paging.put("beginPage", beginPage);
+		paging.put("endPage", endPage);
+		
 		Map<String, Integer> pagingMap = new HashMap<>();
 		pagingMap.put("beginRecord", beginRecord);
 		pagingMap.put("endRecord", endRecord);
 		List<Member> list = memberDAO.selectMemberList(pagingMap);
-		System.out.println("회원 수: " + list.size());
+		// System.out.println("회원 수: " + list.size());
 		
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("list", list);
 		resultMap.put("exists", list.size() > 0);
+		resultMap.put("paging", paging);
 		return resultMap;
 		
 	}
