@@ -12636,3 +12636,9 @@ Java Model Exception: Java Model Status [selectMemberListCommand#2 [in MemberRes
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1499)
 !SUBENTRY 1 org.eclipse.jdt.core 4 969 2021-06-29 12:18:53.918
 !MESSAGE selectMemberListCommand#2 [in MemberRestController [in [Working copy] MemberRestController.java [in com.koreait.ajax.controller [in src/main/java [in 16_AJAX]]]]] does not exist
+
+!ENTRY org.eclipse.jface.text 2 0 2021-06-29 17:39:59.806
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.number'
+
+!ENTRY org.eclipse.jface.text 2 0 2021-06-29 17:39:59.806
+!MESSAGE Duplicate template id: 'org.eclipse.wst.xslt.templates.xpath.round'
