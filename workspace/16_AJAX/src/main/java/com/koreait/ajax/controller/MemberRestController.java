@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.koreait.ajax.command.DeleteMemberCommand;
 import com.koreait.ajax.command.InsertMemberCommand;
 import com.koreait.ajax.command.SelectMemberListCommand;
 import com.koreait.ajax.command.SelectMemberViewCommand;
+import com.koreait.ajax.command.UpdateMemberCommand;
 import com.koreait.ajax.dto.Member;
 import com.koreait.ajax.dto.Page;
 
@@ -28,17 +30,23 @@ public class MemberRestController {
 	private InsertMemberCommand insertMemberCommand;
 	private SelectMemberListCommand selectMemberListCommand;
 	private SelectMemberViewCommand selectMemberViewCommand;
+	private UpdateMemberCommand updateMemberCommand;
+	private DeleteMemberCommand deleteMemberCommand;
 	
 	// constructor
 	@Autowired
 	public MemberRestController(SqlSession sqlSession,
 								InsertMemberCommand insertMemberCommand,
 								SelectMemberListCommand selectMemberListCommand,
-								SelectMemberViewCommand selectMemberViewCommand) {
+								SelectMemberViewCommand selectMemberViewCommand,
+								UpdateMemberCommand updateMemberCommand,
+								DeleteMemberCommand deleteMemberCommand) {
 		this.sqlSession = sqlSession;
 		this.insertMemberCommand = insertMemberCommand;
 		this.selectMemberListCommand = selectMemberListCommand;
 		this.selectMemberViewCommand = selectMemberViewCommand;
+		this.updateMemberCommand = updateMemberCommand;
+		this.deleteMemberCommand = deleteMemberCommand;
 	}
 	
 	@PostMapping(value="insertMember.do",
@@ -67,11 +75,20 @@ public class MemberRestController {
 		return selectMemberViewCommand.execute(sqlSession, model);
 	}
 	
+	@PostMapping(value="updateMember.do",
+				 produces="application/json; charset=utf-8")
+	public Map<String, Object> updateMember(@RequestBody Member member,
+											Model model) {
+		model.addAttribute("member", member);
+		return updateMemberCommand.execute(sqlSession, model);
+	}
 	
-	
-	
-	
-	
-	
+	@PostMapping(value="deleteMember.do",
+				 produces="application/json; charset=utf-8")
+	public Map<String, Object> deleteMember(@RequestBody Member member,
+											Model model) {
+		model.addAttribute("no", member.getNo());
+		return deleteMemberCommand.execute(sqlSession, model);
+	}
 	
 }

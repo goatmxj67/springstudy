@@ -12,4 +12,6 @@ public interface MemberDAO {
 	public int getTotalMemberCount();
 	public List<Member> selectMemberList(Page paging);
 	public Member selectMemberByNo(long no);
+	public int updateMember(Member member);
+	public int deleteMember(long no);
 }

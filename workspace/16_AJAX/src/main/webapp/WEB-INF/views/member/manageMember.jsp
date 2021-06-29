@@ -14,6 +14,7 @@
 			fn_insertMember();
 			fn_updateMember();
 			fn_deleteMember();
+			fn_init();
 		});
 		// 1. 회원 목록
 		var page = 1;  // 전역변수 page는 페이징을 클릭하면 fn_paging()에 의해서 값이 변함
@@ -133,6 +134,7 @@
 		// 3. 회원 정보 보기
 		function fn_selectMemberByNo() {
 			$('body').on('click', '#view_btn', function(){
+				$('input:text[name="id"]').attr('readonly', true);
 				var obj = {
 					no: $(this).prev().val()
 					// no: $(this).siblings('#no').val()
@@ -190,11 +192,68 @@
 		}
 		// 5. 회원 수정
 		function fn_updateMember() {
-			
+			$('#update_btn').click(function(){
+				var obj = {
+					id: $('input:text[name="id"]').val(),
+					name: $('input:text[name="name"]').val(),
+					address: $('input:text[name="address"]').val(),
+					gender: $('input:radio[name="gender"]:checked').val(),
+					no: $('#view_area input:hidden[name="no"]').val()
+				};
+				$.ajax({
+					url: 'updateMember.do',
+					type: 'post',
+					contentType: 'application/json',
+					data: JSON.stringify(obj),
+					success: function(resultMap) {
+						if (resultMap.count > 0) {
+							alert('회원 정보가 수정되었습니다.');
+							fn_selectMemberList();
+						} else {
+							alert('회원 정보가 수정되지 않았습니다.');
+						}
+					}
+				});
+			});
 		}
 		// 6. 회원 삭제
 		function fn_deleteMember() {
-			
+			$('#delete_btn').click(function(){
+				if (!confirm('삭제할까요?')) {
+					return false;
+				}
+				var obj = {
+						no: $('#view_area input:hidden[name="no"]').val()
+				};
+				$.ajax({
+					url: 'deleteMember.do',
+					type: 'post',
+					contentType: 'application/json; charset=utf-8',
+					data: JSON.stringify(obj),
+					dataType: 'json',
+					success: function(resultMap) {
+						if (resultMap.count > 0) {
+							alert('회원 정보가 삭제되었습니다.');
+							fn_selectMemberList();
+							$('input:text[name="id"]').val('').attr('readonly', false);
+							$('input:text[name="name"]').val('');
+							$('input:text[name="address"]').val('');
+							$('input:radio[name="gender"]').prop('checked', false);
+						} else {
+							alert('회원 정보가 삭제되지 않았습니다.');
+						}
+					}
+				});
+			});
+		}
+		// 7. 초기화
+		function fn_init() {
+			$('#init_btn').click(function(){
+				$('input:text[name="id"]').val('').attr('readonly', false);
+				$('input:text[name="name"]').val('');
+				$('input:text[name="address"]').val('');
+				$('input:radio[name="gender"]').prop('checked', false);
+			});
 		}
 	</script>
 	<style>
@@ -232,7 +291,10 @@
 		<input type="radio" name="gender" value="남" id="male"><label for="male">남</label>
 		<input type="radio" name="gender" value="여" id="female"><label for="female">여</label><br>
 		<input type="hidden" name="no">
-		<input type="button" value="등록" id="insert_btn"><br>
+		<input type="button" value="초기화" id="init_btn">
+		<input type="button" value="등록" id="insert_btn">
+		<input type="button" value="수정" id="update_btn">
+		<input type="button" value="삭제" id="delete_btn"><br>
 	</div>
 	<hr>
 	

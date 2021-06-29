@@ -30,8 +30,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 WHERE NO = #{no}
 	</select>
 	
+	<update id="updateMember">
+		UPDATE MEMBER
+		   SET NAME = #{name}
+		     , ADDRESS = #{address}
+		     , GENDER = #{gender}
+		 WHERE NO = #{no}
+	</update>
 	
-	
-	
+	<delete id="deleteMember">
+		DELETE
+		  FROM MEMBER
+		 WHERE NO = #{no}
+	</delete>
 	
 </mapper>
