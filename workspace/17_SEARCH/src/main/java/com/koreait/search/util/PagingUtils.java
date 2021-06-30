@@ -48,21 +48,33 @@ public class PagingUtils {
 		if (beginPage <= pagePerBlock) {
 			sb.append("◀&nbsp;");
 		} else {
-			sb.append("<a href=\"" + path + "?page=" + (beginPage - 1) + "\">◀</a>&nbsp;");
+			if (path.indexOf("?") > 0) {
+				sb.append("<a href=\"" + path + "&page=" + (beginPage - 1) + "\">◀</a>&nbsp;");
+			} else {
+				sb.append("<a href=\"" + path + "?page=" + (beginPage - 1) + "\">◀</a>&nbsp;");				
+			}
 		}
 		
 		for (int p = beginPage; p <= endPage; p++) {
 			if (p == page) {
 				sb.append(p + "&nbsp;");
 			} else {
-				sb.append("<a href=\"" + path + "?page=" + p + "\">" + p + "</a>&nbsp;");
+				if (path.indexOf("?") > 0) {
+					sb.append("<a href=\"" + path + "&page=" + p + "\">" + p + "</a>&nbsp;");
+				} else {
+					sb.append("<a href=\"" + path + "?page=" + p + "\">" + p + "</a>&nbsp;");					
+				}
 			}
 		}
 		
 		if (endPage == totalPage) {
 			sb.append("▶");
 		} else {
-			sb.append("<a href=\"" + path + "?page=" + (endPage + 1) + "\">▶</a>");
+			if (path.indexOf("?") > 0) {
+				sb.append("<a href=\"" + path + "&page=" + (endPage + 1) + "\">▶</a>");
+			} else {
+				sb.append("<a href=\"" + path + "?page=" + (endPage + 1) + "\">▶</a>");				
+			}
 		}
 		
 		return sb.toString();

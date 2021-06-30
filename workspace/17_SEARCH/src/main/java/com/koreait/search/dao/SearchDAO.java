@@ -11,5 +11,7 @@ public interface SearchDAO {
 	public int getTotalRecord();
 	public List<Employees> searchAll(PageDTO pageDTO);
 	public List<Employees> autoComplete(QueryDTO queryDTO);
+	public List<Employees> search(QueryDTO queryDTO);
+	public int getSearchRecord(QueryDTO queryDTO);
 	
 }

@@ -15,6 +15,11 @@
 		});
 		function fn_search(){
 			$('#search_btn').click(function(){
+				if ($('#column').val() == '') {
+					alert('검색 카테고리를 선택하세요.');
+					$('#column').focus();
+					return false;
+				}
 				$('#f').attr('action', 'search.do');
 				$('#f').submit();
 			});

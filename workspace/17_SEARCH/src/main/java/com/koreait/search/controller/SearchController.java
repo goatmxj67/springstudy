@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.koreait.search.command.AutoCompleteCommand;
 import com.koreait.search.command.SearchAllCommand;
+import com.koreait.search.command.SearchQueryCommand;
 import com.koreait.search.dto.QueryDTO;
 
 @Controller
@@ -25,15 +26,18 @@ public class SearchController {
 	private SqlSession sqlSession;
 	private SearchAllCommand searchAllCommand;
 	private AutoCompleteCommand autoCompleteCommand;
+	private SearchQueryCommand searchQueryCommand;
 	
 	@Autowired
 	public SearchController(SqlSession sqlSession,
 							SearchAllCommand searchAllCommand,
-							AutoCompleteCommand autoCompleteCommand) {
+							AutoCompleteCommand autoCompleteCommand,
+							SearchQueryCommand searchQueryCommand) {
 		super();
 		this.sqlSession = sqlSession;
 		this.searchAllCommand = searchAllCommand;
 		this.autoCompleteCommand = autoCompleteCommand;
+		this.searchQueryCommand = searchQueryCommand;
 	}
 
 	@GetMapping(value = {"/", "index.do"})
@@ -60,7 +64,13 @@ public class SearchController {
 		autoCompleteCommand.execute(sqlSession, model);
 	}
 	
-	
+	@GetMapping(value="search.do")
+	public String search(HttpServletRequest request,
+						 Model model) {
+		model.addAttribute("request", request);
+		searchQueryCommand.execute(sqlSession, model);
+		return "list";
+	}
 	
 	
 	

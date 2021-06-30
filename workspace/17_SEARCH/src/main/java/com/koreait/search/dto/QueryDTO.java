@@ -6,4 +6,6 @@ import lombok.Data;
 public class QueryDTO {
 	private String column;
 	private String query;
+	private int beginRecord;
+	private int endRecord;
 }
