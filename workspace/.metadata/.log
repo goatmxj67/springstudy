@@ -12919,3 +12919,26 @@ Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING
 	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:385)
 	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:213)
 	... 9 more
+
+!ENTRY org.eclipse.equinox.security 1 0 2021-06-30 17:44:55.175
+!MESSAGE New keyring password generated. 
+
+!ENTRY org.eclipse.egit.core 4 0 2021-06-30 17:44:55.643
+!MESSAGE An exception occurred during push on URI https://github.com/goatmxj67/springstudy.git: https://github.com/goatmxj67/springstudy.git: git-receive-pack not permitted on 'https://github.com/goatmxj67/springstudy.git/'
+!STACK 0
+org.eclipse.jgit.api.errors.TransportException: https://github.com/goatmxj67/springstudy.git: git-receive-pack not permitted on 'https://github.com/goatmxj67/springstudy.git/'
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:180)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:215)
+	at org.eclipse.egit.ui.internal.push.PushJob.performJob(PushJob.java:84)
+	at org.eclipse.egit.ui.internal.jobs.RepositoryJob.run(RepositoryJob.java:57)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56)
+Caused by: org.eclipse.jgit.errors.TransportException: https://github.com/goatmxj67/springstudy.git: git-receive-pack not permitted on 'https://github.com/goatmxj67/springstudy.git/'
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:535)
+	at org.eclipse.jgit.transport.TransportHttp.openPush(TransportHttp.java:435)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:160)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1344)
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:169)
+	... 4 more
+
+!ENTRY org.eclipse.egit.ui 4 0 2021-06-30 17:44:55.658
+!MESSAGE Can't connect to any repository: https://github.com/goatmxj67/springstudy.git (https://github.com/goatmxj67/springstudy.git: git-receive-pack not permitted on 'https://github.com/goatmxj67/springstudy.git/')
