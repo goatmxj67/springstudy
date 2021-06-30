@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.JSONObject;
 import org.springframework.ui.Model;
 
 import com.koreait.search.dao.SearchDAO;
@@ -26,12 +27,9 @@ public class AutoCompleteCommand implements SearchCommand {
 		SearchDAO searchDAO = sqlSession.getMapper(SearchDAO.class);
 		List<Employees> list = searchDAO.autoComplete(queryDTO);
 		
-		System.out.println(list.size());
-		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		if (list.size() == 0) {
 			resultMap.put("status", 500);
-			// list.add("해당 검색어가 없습니다.");
 			resultMap.put("list", null);
 		} else {
 			resultMap.put("status", 200);
@@ -42,11 +40,12 @@ public class AutoCompleteCommand implements SearchCommand {
 		// index.jsp에서 ajax로 요청했으므로 index.jsp의 success로 응답된다.
 		try {
 			response.setContentType("text/html; charset=utf-8");
-			response.getWriter().println(resultMap);
+			JSONObject obj = new JSONObject(resultMap);
+			response.getWriter().println(obj.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
 	}
 
 }

@@ -21,17 +21,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  		  			 , DEPARTMENT_ID AS DEPARTMENTID
 		  		  		  FROM EMPLOYEES
 		  		  		 ORDER BY EMPLOYEE_ID) A) B
-	     WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+		 WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
 	</select>
 	
-	<!-- field로 쓰는거라 $로 써야함 -->
 	<select id="autoComplete" resultType="com.koreait.search.dto.Employees">
-		SELECT	<if test="column == 'EMPLOYEE_ID'">EMPLOYEE_ID AS EMPLOYEEID</if>
-				<if test="column == 'FIRST_NAME'">FIRST_NAME AS FIRSTNAME</if>
-				<if test="column == 'LAST_NAME'">LAST_NAME AS LASTNAME</if>
+		SELECT DISTINCT
+			   <if test="column == 'EMPLOYEE_ID'">EMPLOYEE_ID AS EMPLOYEEID</if>
+			   <if test="column == 'FIRST_NAME'">FIRST_NAME AS FIRSTNAME</if>
+			   <if test="column == 'LAST_NAME'">LAST_NAME AS LASTNAME</if>
 		  FROM EMPLOYEES
 		 WHERE ${column} LIKE #{query} || '%'
 	</select>
+	
+	
+	
+	
 	
 	
 	
