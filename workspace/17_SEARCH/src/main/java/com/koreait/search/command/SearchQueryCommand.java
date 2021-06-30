@@ -28,10 +28,14 @@ public class SearchQueryCommand implements SearchCommand {
 		
 		String column = request.getParameter("column");
 		String query = request.getParameter("query");
+		String top = request.getParameter("top");
+		String bottom = request.getParameter("bottom");
 		
 		QueryDTO queryDTO = new QueryDTO();
 		queryDTO.setColumn(column);
 		queryDTO.setQuery(query);
+		queryDTO.setTop(top);
+		queryDTO.setBottom(bottom);
 		
 		SearchDAO searchDAO = sqlSession.getMapper(SearchDAO.class);
 		int searchRecord = searchDAO.getSearchRecord(queryDTO);
@@ -42,7 +46,12 @@ public class SearchQueryCommand implements SearchCommand {
 		queryDTO.setEndRecord(pageDTO.getEndRecord());
 		
 		List<Employees> list = searchDAO.search(queryDTO);
-		String paging = PagingUtils.getPaging("search.do?column=" + column + "&query=" + query, page);
+		String paging = null;
+		if (column.equals("SALARY")) {
+			paging = PagingUtils.getPaging("search.do?column=" + column + "&bottom=" + bottom + "&top=" + top, page);
+		} else {
+			paging = PagingUtils.getPaging("search.do?column=" + column + "&query=" + query, page);
+		}
 		
 		model.addAttribute("list", list);
 		model.addAttribute("paging", paging);

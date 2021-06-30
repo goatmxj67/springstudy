@@ -36,7 +36,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getSearchRecord" resultType="int">
 		SELECT COUNT(EMPLOYEE_ID)
 		  FROM EMPLOYEES
-		 WHERE ${column} LIKE '%' || #{query} || '%'
+		 WHERE <if test="column != 'SALARY'">${column} LIKE '%' || #{query} || '%'</if>
+		  	   <if test="column == 'SALARY'">SALARY BETWEEN #{bottom} AND #{top}</if>
 	</select>
 	
 	<select id="search" resultType="com.koreait.search.dto.Employees">
@@ -49,7 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  		  			 , SALARY
 		  		  			 , DEPARTMENT_ID AS DEPARTMENTID
 		  		  		  FROM EMPLOYEES
-		  		  		 WHERE ${column} LIKE '%' || #{query} || '%'
+		  		  		 WHERE <if test="column != 'SALARY'">${column} LIKE '%' || #{query} || '%'</if>
+		  		  		 	   <if test="column == 'SALARY'">SALARY BETWEEN #{bottom} AND #{top}</if>
 		  		  		 ORDER BY EMPLOYEE_ID) A) B
 		 WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
 	</select>
