@@ -5,6 +5,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.koreait.search.dao.SearchDAO">
 
-	
+	<select id="getTotalRecord" resultType="int">
+		SELECT COUNT(EMPLOYEE_ID)
+		  FROM EMPLOYEES
+	</select>
+
+	<select id="searchAll" resultType="com.koreait.search.dto.Employees">
+		SELECT B.*
+		  FROM (SELECT ROWNUM AS RN, A.*
+		  		  FROM (SELECT EMPLOYEE_ID AS EMPLOYEEID
+		  		  			 , FIRST_NAME AS FIRSTNAME
+		  		  			 , LAST_NAME AS LASTNAME
+		  		  			 , HIRE_DATE AS HIREDATE
+		  		  			 , SALARY
+		  		  			 , DEPARTMENT_ID AS DEPARTMENTID
+		  		  		  FROM EMPLOYEES
+		  		  		 ORDER BY EMPLOYEE_ID) A) B
+	     WHERE B.RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
 	
 </mapper>

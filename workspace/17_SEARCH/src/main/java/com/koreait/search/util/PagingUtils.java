@@ -1,41 +1,72 @@
 package com.koreait.search.util;
 
-import com.koreait.search.dto.Page;
+import com.koreait.search.dto.PageDTO;
 
 public class PagingUtils {
 
 	// field
-	public static int recordPerPage = 5;
-	public static int pagePerBlock = 3;
+	public static int recordPerPage = 10;
+	public static int beginRecord;
+	public static int endRecord;
 	
-	// ajax에서 사용
-	public static Page getPage(int totalRecord, int page) {
+	public static int pagePerBlock = 5;
+	public static int totalPage;
+	public static int beginPage;
+	public static int endPage;
+	
+	public static PageDTO getPage(int totalRecord, int page) {
 		
-		int beginRecord = (page - 1) * recordPerPage + 1;
-		int endRecord = beginRecord + recordPerPage - 1;
+		beginRecord = (page - 1) * recordPerPage + 1;
+		endRecord = beginRecord + recordPerPage - 1;
 		endRecord = endRecord < totalRecord ? endRecord : totalRecord;
 		
-		int totalPage = (totalRecord / recordPerPage) + (totalRecord % recordPerPage > 0 ? 1 : 0);
-		int beginPage = ((page - 1) / pagePerBlock) * pagePerBlock + 1;
-		int endPage = beginPage + pagePerBlock - 1;
+		totalPage = (totalRecord / recordPerPage) + (totalRecord % recordPerPage > 0 ? 1 : 0);
+		beginPage = ((page - 1) / pagePerBlock) * pagePerBlock + 1;
+		endPage = beginPage + pagePerBlock - 1;
 		endPage = endPage < totalPage ? endPage : totalPage;
 		
-		Page paging = new Page();
-		paging.setPage(page);
-		paging.setTotalRecord(totalRecord);
-		paging.setRecordPerPage(recordPerPage);
-		paging.setBeginRecord(beginRecord);
-		paging.setEndRecord(endRecord);
-		paging.setTotalPage(totalPage);
-		paging.setPagePerBlock(pagePerBlock);
-		paging.setBeginPage(beginPage);
-		paging.setEndPage(endPage);
+		PageDTO pageDTO = new PageDTO();
+		pageDTO.setPage(page);
+		pageDTO.setTotalRecord(totalRecord);
+		pageDTO.setRecordPerPage(recordPerPage);
+		pageDTO.setBeginRecord(beginRecord);
+		pageDTO.setEndRecord(endRecord);
+		pageDTO.setTotalPage(totalPage);
+		pageDTO.setPagePerBlock(pagePerBlock);
+		pageDTO.setBeginPage(beginPage);
+		pageDTO.setEndPage(endPage);
 		
-		return paging;
+		return pageDTO;
 		
 	}
 	
-	// mvc 사용
-	
+	// << 1 2 3 4 5 >> 반환
+	public static String getPaging(String path, int page) {
+		
+		StringBuilder sb = new StringBuilder();
+		
+		if (beginPage <= pagePerBlock) {
+			sb.append("◀&nbsp;");
+		} else {
+			sb.append("<a href=\"" + path + "?page=" + (beginPage - 1) + "\">◀</a>&nbsp;");
+		}
+		
+		for (int p = beginPage; p <= endPage; p++) {
+			if (p == page) {
+				sb.append(p + "&nbsp;");
+			} else {
+				sb.append("<a href=\"" + path + "?page=" + p + "\">" + p + "</a>&nbsp;");
+			}
+		}
+		
+		if (endPage == totalPage) {
+			sb.append("▶");
+		} else {
+			sb.append("<a href=\"" + path + "?page=" + (endPage + 1) + "\">▶</a>");
+		}
+		
+		return sb.toString();
+		
+	}
 	
 }

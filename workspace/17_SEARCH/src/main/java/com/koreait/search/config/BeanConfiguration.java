@@ -1,4 +1,3 @@
-  
 package com.koreait.search.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -8,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import com.koreait.search.command.SearchAllCommand;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -24,7 +24,7 @@ public class BeanConfiguration {
 		return hikariConfig;
 	}
 	
-	@Bean
+	@Bean(destroyMethod="close")
 	public HikariDataSource hikariDataSource() {
 		return new HikariDataSource(hikariConfig());
 	}
@@ -41,6 +41,13 @@ public class BeanConfiguration {
 	public SqlSessionTemplate sqlSession() throws Exception {
 		return new SqlSessionTemplate(sqlSessionFactory());
 	}
+	
+	@Bean
+	public SearchAllCommand searchAllCommand() {
+		return new SearchAllCommand();
+	}
+	
+	
 	
 	
 	

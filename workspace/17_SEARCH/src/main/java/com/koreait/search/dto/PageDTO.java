@@ -3,7 +3,7 @@ package com.koreait.search.dto;
 import lombok.Data;
 
 @Data
-public class Page {
+public class PageDTO {
 	private int page;
 	private int totalRecord;
 	private int recordPerPage;
