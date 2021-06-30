@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import com.koreait.search.command.AutoCompleteCommand;
 import com.koreait.search.command.SearchAllCommand;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -47,7 +48,10 @@ public class BeanConfiguration {
 		return new SearchAllCommand();
 	}
 	
-	
+	@Bean
+	public AutoCompleteCommand autoCompleteCommand() {
+		return new AutoCompleteCommand();
+	}
 	
 	
 	

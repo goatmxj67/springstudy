@@ -32,7 +32,25 @@
 		function fn_auto_complete() {
 			$('#query').keyup(function(){
 				$('#auto_complete_list').empty();  // 내부 value 태그 모두 지워줌
-				
+				var obj = {
+					column: $('#column').val(),
+					query: $('#query').val()
+				};
+				$.ajax({
+					url: 'autoComplete.do',
+					type: 'post',
+					contentType: 'application/json',
+					data: JSON.stringify(obj),
+					dataType: 'json',
+					success: function(resultMap) {
+						console.log(resultMap);
+						// alert(resultMap.status);
+						// console.log(resultMap.list);
+					},
+					error: function() {
+						alert('실패');
+					}
+				});
 			});
 		}
 	</script>
