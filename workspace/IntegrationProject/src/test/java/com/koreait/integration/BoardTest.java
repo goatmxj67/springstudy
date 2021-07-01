@@ -58,6 +58,9 @@ public class BoardTest {
 			int status = obj.getInt("status");
 			System.out.println("상태: " + status);
 			
+			br.close();
+			con.disconnect();
+			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (MalformedURLException e) {
