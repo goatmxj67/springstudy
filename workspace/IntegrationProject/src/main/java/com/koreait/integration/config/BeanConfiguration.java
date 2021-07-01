@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import com.koreait.integration.repository.BoardRepository;
+import com.koreait.integration.service.BoardServiceImpl;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -40,6 +42,18 @@ public class BeanConfiguration {
 	public SqlSessionTemplate sqlSession() throws Exception {
 		return new SqlSessionTemplate(sqlSessionFactory());
 	}
+	
+	@Bean
+	public BoardRepository repository() {
+		return new BoardRepository();
+	}
+	
+	@Bean
+	public BoardServiceImpl boardServiceImpl() {
+		return new BoardServiceImpl();
+	}
+	
+	
 	
 	
 	
