@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.koreait.mine.dao.BoardDAO">
+
+	<select id="selectBoardList" resultType="com.koreait.mine.dto.Board">
+		SELECT NO, WRITER, TITLE, CONTENT, FILENAME, POSTDATE
+		  FROM BOARD
+		 ORDER BY NO DESC
+	</select>
+	
+	<insert id="insertBoard">
+		INSERT INTO BOARD
+		VALUES (BOARD_SEQ.NEXTVAL, #{param1}, #{param2}, #{param3}, 0, #{param4}, #{param5}, 0, SYSDATE, SYSDATE)
+	</insert>
+	
+	<select id="selectBoardByNo" resultType="com.koreait.mine.dto.Board">
+		SELECT NO, WRITER, TITLE, CONTENT, FILENAME, POSTDATE
+		  FROM BOARD
+		 WHERE NO = #{param1}
+	</select>
+	
+	<update id="updateBoard">
+		UPDATE BOARD
+		   SET TITLE = #{param1}
+		     , CONTENT = #{param2}
+		     , FILENAME = #{param3}
+		 WHERE NO = #{param4}
+	</update>
+	
+	<delete id="deleteBoard">
+		DELETE 
+		  FROM BOARD
+		 WHERE NO = #{param1}
+	</delete>
+	
+	
+	
+	
+	
+	
+	
+
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.koreait.mine.dao.MemberDAO">
+
+	<select id="idCheck" resultType="int">
+		SELECT COUNT(ID)
+		  FROM MEMBER
+		 WHERE ID = #{id}
+	</select>
+	
+	<insert id="join">
+		INSERT INTO MEMBER
+		VALUES (MEMBER_SEQ.NEXTVAL, #{id}, #{pw}, #{name}, #{phone}, #{email}, #{address}, SYSDATE)
+	</insert>
+	
+	<select id="login" resultType="com.koreait.mine.dto.Member">
+		SELECT NO, ID, PW, NAME, EMAIL, REGDATE
+		  FROM MEMBER
+		 WHERE ID = #{id}
+		   AND PW = #{pw}
+	</select>		
+	
+	<delete id="leave">
+		DELETE
+		  FROM MEMBER
+		 WHERE NO = #{no}
+	</delete>
+	
+	<update id="updateMember">
+		UPDATE MEMBER
+		   SET NAME = #{name}
+		     , EMAIL = #{email}
+		 WHERE NO = #{no}
+	</update>
+	
+	<update id="updatePw">
+		UPDATE MEMBER
+		   SET PW = #{pw}
+		 WHERE NO = #{no}
+	</update>
+	
+	<select id="findId" resultType="com.koreait.mine.dto.Member">
+		SELECT ID, REGDATE
+		  FROM MEMBER
+		 WHERE EMAIL = #{email}
+	</select>
+	
+	<update id="changePw">
+		UPDATE MEMBER
+		   SET PW = #{pw}
+		 WHERE EMAIL = #{email}
+	</update>
+	
+</mapper>
