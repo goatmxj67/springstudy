@@ -1,4 +1,4 @@
-package com.koreait.mine.member.command;
+package com.koreait.mine.command.member;
 
 import java.util.Map;
 
@@ -21,6 +21,7 @@ public class LeaveCommand implements MemberCommand {
 		long no = ((Member)session.getAttribute("loginUser")).getNo();
 		
 		MemberDAO memberDAO = sqlSession.getMapper(MemberDAO.class);
+		memberDAO.changeState(no);
 		int count = memberDAO.leave(no);
 
 		if (count > 0) {

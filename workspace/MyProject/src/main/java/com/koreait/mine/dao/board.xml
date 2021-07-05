@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="insertBoard">
 		INSERT INTO BOARD
-		VALUES (BOARD_SEQ.NEXTVAL, #{param1}, #{param2}, #{param3}, 0, #{param4}, #{param5}, 0, SYSDATE, SYSDATE)
+		VALUES (BOARD_SEQ.NEXTVAL, #{param1}, #{param2}, #{param3}, 0, #{param4}, #{param5}, SYSDATE, SYSDATE)
 	</insert>
 	
 	<select id="selectBoardByNo" resultType="com.koreait.mine.dto.Board">

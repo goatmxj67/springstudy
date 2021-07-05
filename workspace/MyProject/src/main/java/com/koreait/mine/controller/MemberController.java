@@ -14,18 +14,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.koreait.mine.command.member.EmailAuthCommand;
+import com.koreait.mine.command.member.FindIdCommand;
+import com.koreait.mine.command.member.FindPwCommand;
+import com.koreait.mine.command.member.IdCheckCommand;
+import com.koreait.mine.command.member.JoinCommand;
+import com.koreait.mine.command.member.LeaveCommand;
+import com.koreait.mine.command.member.LoginCommand;
+import com.koreait.mine.command.member.LogoutCommand;
+import com.koreait.mine.command.member.PresentPwCheckCommand;
+import com.koreait.mine.command.member.UpdateMemberCommand;
+import com.koreait.mine.command.member.UpdatePwCommand;
 import com.koreait.mine.dto.Member;
-import com.koreait.mine.member.command.EmailAuthCommand;
-import com.koreait.mine.member.command.FindIdCommand;
-import com.koreait.mine.member.command.FindPwCommand;
-import com.koreait.mine.member.command.IdCheckCommand;
-import com.koreait.mine.member.command.JoinCommand;
-import com.koreait.mine.member.command.LeaveCommand;
-import com.koreait.mine.member.command.LoginCommand;
-import com.koreait.mine.member.command.LogoutCommand;
-import com.koreait.mine.member.command.PresentPwCheckCommand;
-import com.koreait.mine.member.command.UpdateMemberCommand;
-import com.koreait.mine.member.command.UpdatePwCommand;
 
 @Controller
 public class MemberController {
@@ -124,7 +124,7 @@ public class MemberController {
 	
 	@GetMapping(value="leave.do")
 	public String leave(HttpSession session,
-						 Model model) {
+						Model model) {
 		model.addAttribute("session", session);
 		leaveCommand.execute(sqlSession, model);
 		return "redirect:/";  

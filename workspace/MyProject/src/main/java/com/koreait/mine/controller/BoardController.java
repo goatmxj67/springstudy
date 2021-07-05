@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.koreait.mine.board.command.DeleteBoardCommand;
-import com.koreait.mine.board.command.DownloadCommand;
-import com.koreait.mine.board.command.InsertBoardCommand;
-import com.koreait.mine.board.command.SelectBoardListCommand;
-import com.koreait.mine.board.command.SelectBoardViewCommand;
-import com.koreait.mine.board.command.UpdateBoardCommand;
+import com.koreait.mine.command.board.DeleteBoardCommand;
+import com.koreait.mine.command.board.DownloadCommand;
+import com.koreait.mine.command.board.InsertBoardCommand;
+import com.koreait.mine.command.board.SelectBoardListCommand;
+import com.koreait.mine.command.board.SelectBoardViewCommand;
+import com.koreait.mine.command.board.UpdateBoardCommand;
 
 @Controller
 public class BoardController {

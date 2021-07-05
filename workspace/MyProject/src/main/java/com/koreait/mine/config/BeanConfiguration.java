@@ -9,23 +9,23 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
-import com.koreait.mine.board.command.DeleteBoardCommand;
-import com.koreait.mine.board.command.DownloadCommand;
-import com.koreait.mine.board.command.InsertBoardCommand;
-import com.koreait.mine.board.command.SelectBoardListCommand;
-import com.koreait.mine.board.command.SelectBoardViewCommand;
-import com.koreait.mine.board.command.UpdateBoardCommand;
-import com.koreait.mine.member.command.EmailAuthCommand;
-import com.koreait.mine.member.command.FindIdCommand;
-import com.koreait.mine.member.command.FindPwCommand;
-import com.koreait.mine.member.command.IdCheckCommand;
-import com.koreait.mine.member.command.JoinCommand;
-import com.koreait.mine.member.command.LeaveCommand;
-import com.koreait.mine.member.command.LoginCommand;
-import com.koreait.mine.member.command.LogoutCommand;
-import com.koreait.mine.member.command.PresentPwCheckCommand;
-import com.koreait.mine.member.command.UpdateMemberCommand;
-import com.koreait.mine.member.command.UpdatePwCommand;
+import com.koreait.mine.command.board.DeleteBoardCommand;
+import com.koreait.mine.command.board.DownloadCommand;
+import com.koreait.mine.command.board.InsertBoardCommand;
+import com.koreait.mine.command.board.SelectBoardListCommand;
+import com.koreait.mine.command.board.SelectBoardViewCommand;
+import com.koreait.mine.command.board.UpdateBoardCommand;
+import com.koreait.mine.command.member.EmailAuthCommand;
+import com.koreait.mine.command.member.FindIdCommand;
+import com.koreait.mine.command.member.FindPwCommand;
+import com.koreait.mine.command.member.IdCheckCommand;
+import com.koreait.mine.command.member.JoinCommand;
+import com.koreait.mine.command.member.LeaveCommand;
+import com.koreait.mine.command.member.LoginCommand;
+import com.koreait.mine.command.member.LogoutCommand;
+import com.koreait.mine.command.member.PresentPwCheckCommand;
+import com.koreait.mine.command.member.UpdateMemberCommand;
+import com.koreait.mine.command.member.UpdatePwCommand;
 
 @Configuration
 public class BeanConfiguration {

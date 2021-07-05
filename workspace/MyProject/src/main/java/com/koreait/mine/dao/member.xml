@@ -13,7 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<insert id="join">
 		INSERT INTO MEMBER
-		VALUES (MEMBER_SEQ.NEXTVAL, #{id}, #{pw}, #{name}, #{phone}, #{email}, #{address}, SYSDATE)
+		VALUES (MEMBER_SEQ.NEXTVAL, #{id}, #{pw}, #{name}, #{phone}, #{email}, #{address}, SYSDATE, 0)
 	</insert>
 	
 	<select id="login" resultType="com.koreait.mine.dto.Member">
@@ -52,6 +52,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE MEMBER
 		   SET PW = #{pw}
 		 WHERE EMAIL = #{email}
+	</update>
+	
+	<update id="changeState">
+		UPDATE MEMBER
+		   SET STATE = -1
+		 WHERE NO = #{no}
 	</update>
 	
 </mapper>

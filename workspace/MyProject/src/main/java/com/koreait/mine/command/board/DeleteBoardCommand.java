@@ -1,4 +1,4 @@
-package com.koreait.mine.board.command;
+package com.koreait.mine.command.board;
 
 import java.io.File;
 import java.util.Map;

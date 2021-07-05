@@ -8,6 +8,32 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
+	<style>
+		.reply_form {
+		width: 100%;
+	}
+	.reply_form textarea {
+		width: 85%;
+		height: 50px;
+	}
+	.reply_form button {
+		width: 13%;
+	}
+	.reply_list table {
+		width: 100%;
+		border-collapse: collapse;
+		border-top: 1px solid gray;
+		border-bottom: 1px solid gray;
+	}
+	.reply_list table td {
+		padding: 10px;
+		border-bottom: 1px solid gray;
+	}
+	.reply_list table td:nth-of-type(1) { width: 70%; }
+	.reply_list table td:nth-of-type(2) { width: 10%; }
+	.reply_list table td:nth-of-type(3) { width: 15%; }
+	.reply_list table td:nth-of-type(4) { width: 5%; }
+	</style>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script>
 		$(function(){
@@ -58,6 +84,38 @@
 		<img alt="${filename}" src="resources/archive/${filename}" style="width: 300px;">
 	
 	</form>
+	
+	<%-- 댓글 입력창 --%>
+<div class="reply_form">
+	<form action="insertReply.do" method="post">
+		<input type="hidden" name="boardIdx" value="${board.no}"> 
+		<textarea name="content" placeholder="로그인을 하면 작성할 수 있습니다."></textarea>
+		<c:if test="${loginUser != null}">
+			<button>작성하기</button>
+		</c:if>
+	</form>
+</div>
+
+<%-- 댓글 목록창 --%>
+<div class="reply_list">
+	댓글 ${replyCount}개<br>
+	<table>
+		<tbody>
+			<c:forEach var="replyDTO" items="${replyList}">
+				<tr>
+					<td>${replyDTO.content}</td>
+					<td>${replyDTO.author}</td>
+					<td>${replyDTO.postdate}</td>
+					<td>
+						<c:if test="${loginDTO.id == replyDTO.author}">  <%-- 댓글의 작성자만 삭제할 수 있다. --%>
+							<a href="/10_MODEL2/deleteReply.b?replyIdx=${replyDTO.idx}&idx=${replyDTO.boardIdx}">삭제</a>
+						</c:if>
+					</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+</div>
 	
 </body>
 </html>

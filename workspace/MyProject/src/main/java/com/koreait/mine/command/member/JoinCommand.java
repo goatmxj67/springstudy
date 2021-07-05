@@ -1,9 +1,8 @@
-package com.koreait.mine.member.command;
+package com.koreait.mine.command.member;
 
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.ui.Model;
@@ -12,32 +11,31 @@ import com.koreait.mine.dao.MemberDAO;
 import com.koreait.mine.dto.Member;
 import com.koreait.mine.util.SecurityUtils;
 
-public class UpdateMemberCommand implements MemberCommand {
+public class JoinCommand implements MemberCommand {
 
 	@Override
 	public void execute(SqlSession sqlSession, Model model) {
-		
+	
 		Map<String, Object> map = model.asMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
 		
+		String id = request.getParameter("id");
+		String pw = request.getParameter("pw");
 		String name = request.getParameter("name");
+		String phone = request.getParameter("phone");
 		String email = request.getParameter("email");
-		long no = Long.parseLong(request.getParameter("no"));
+		String address = request.getParameter("address");
 		
 		Member member = new Member();
-		member.setName(SecurityUtils.xss(name));
+		member.setId(id);
+		member.setPw(SecurityUtils.encodeBase64(pw));  // pw의 암호화
+		member.setName(SecurityUtils.xss(name));  // name의 xss처리
+		member.setPhone(phone);
 		member.setEmail(email);
-		member.setNo(no);
+		member.setAddress(address);
 		
 		MemberDAO memberDAO = sqlSession.getMapper(MemberDAO.class);
-		int count = memberDAO.updateMember(member);
-		
-		if (count > 0) {
-			HttpSession session = request.getSession();
-			Member loginUser = (Member)session.getAttribute("loginUser");
-			loginUser.setName(name);
-			loginUser.setEmail(email);
-		}
+		memberDAO.join(member);
 		
 	}
 
