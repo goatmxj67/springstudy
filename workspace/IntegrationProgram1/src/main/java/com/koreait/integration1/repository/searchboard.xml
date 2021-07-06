@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.koreait.integration1.repository.searchboard">
+	
+	<select id="searchAll" resultType="com.koreait.integration1.domain.SearchBoard">
+		SELECT NO, TITLE, CONTENT, REGDATE
+		  FROM SEARCHBOARD
+	</select>
+	
+	<select id="search" resultType="com.koreait.integration1.domain.SearchBoard">
+		SELECT NO, TITLE, CONTENT, REGDATE
+		  FROM SEARCHBOARD
+		 WHERE ${column} LIKE '%' || #{searchText} || '%'
+	</select>
+
+</mapper>

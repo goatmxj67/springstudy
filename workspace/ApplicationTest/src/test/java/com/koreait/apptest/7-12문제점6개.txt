@@ -1,0 +1,31 @@
+하나맞으면 5점 다 맞으면 30점
+문제점 6개
+1) index.jsp에 jquery cdn이 없음 
+=> $ is not defined 오류 메시지뜸
+2) index.jsp에 name 속성이 없어서 submit가 안됨
+=> null pointer 뜸
+3) @GetMapping(value = "login.do")이 아니고 @PostMapping
+4) @Controller가 없음
+5) @Configuration이 없음 => Bean 못 만듬
+6) hikariConfig.setDriverClassName("jdbc:mysql://localhost:3306/?serverTimezone=UTC");
+=> oracle.jdbc.~~~
+7) <mapper namespace="com.koreait.apptest.dao.member">
+=> com.koreait.apptest.dao.MemberDAO
+MemberDAO가 인터페이스이기때문에
+8) xml에서 leave => leaveHome 수정
+9) location.href = 'join.do'; 파라미터 안 가지고 감
+=> 
+$('#f').attr('action', 'join.do');
+$('#f').submit(); 으로 수정
+10) 
+@PostMapping(value = "idCheck.do", produces = "application/json; charset=utf-8")
+=> @GetMapping으로 수정, @ResponseBody 추가
+
+
+
+
+
+
+
+
+
