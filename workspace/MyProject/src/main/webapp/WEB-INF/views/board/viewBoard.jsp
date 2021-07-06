@@ -107,8 +107,8 @@
 					<td>${replyDTO.author}</td>
 					<td>${replyDTO.postdate}</td>
 					<td>
-						<c:if test="${loginDTO.id == replyDTO.author}">  <%-- 댓글의 작성자만 삭제할 수 있다. --%>
-							<a href="/10_MODEL2/deleteReply.b?replyIdx=${replyDTO.idx}&idx=${replyDTO.boardIdx}">삭제</a>
+						<c:if test="${loginUser.id == replyDTO.author}">  <%-- 댓글의 작성자만 삭제할 수 있다. --%>
+							<a href="deleteReply.do?replyIdx=${replyDTO.idx}&idx=${replyDTO.boardIdx}">삭제</a>
 						</c:if>
 					</td>
 				</tr>

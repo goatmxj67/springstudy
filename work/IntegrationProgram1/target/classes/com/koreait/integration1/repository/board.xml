@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.koreait.integration1.repository.board">
+
+	<select id="countAll" resultType="int">
+		SELECT COUNT(*)
+		  FROM SEARCHBOARD
+	</select>
+
+	<select id="selectAll" resultType="com.koreait.integration1.domain.SearchBoard">
+		SELECT NO, TITLE, CONTENT, REGDATE
+		  FROM SEARCHBOARD
+	</select>
+	
+	<!-- "||"는 oracle에서 "+"(문자연결) 이다 ("or"이 아니다)  -->
+	<select id="selectQuery" resultType="com.koreait.integration1.domain.SearchBoard">
+		SELECT NO, TITLE, CONTENT, REGDATE
+		  FROM SEARCHBOARD
+		<if test="column != 'BOTH'">WHERE ${column} LIKE '%' || #{query} || '%'</if>
+		<if test="column == 'BOTH'">WHERE TITLE LIKE '%' || #{query} || '%' OR CONTENT LIKE '%' || #{query} || '%'</if>
+	</select>
+	
+	
+	
+	
+	
+	
+	
+</mapper>
