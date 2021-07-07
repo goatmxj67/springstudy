@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class LoginValidation
  */
-@WebServlet("/LoginValidation")
+@WebServlet("/loginValidation.do")
 public class LoginValidation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,22 +33,25 @@ public class LoginValidation extends HttpServlet {
 		// 응답 처리를 위해서 response의 처리
 		response.setContentType("text/html; charset=utf-8");
 		PrintWriter out = response.getWriter();
+				
+		System.out.println(request.getParameter("user_key"));
 		
 		// 사용자 입력값 검증
 		// 검증 결과에 따라서 이동할 페이지를 다르게 지정
 		
 		boolean result = CaptchaValidation.getValidate(request);
+		System.out.println(result);
 		if (result) {
 			out.println("<script>");
 			out.println("alert('검증에 성공했습니다.')");
-			out.println("location.href = 'index.do'");
 			out.println("</script>");
+			request.getRequestDispatcher("changePwPage.do").forward(request, response);
 			// 메시지 없이 이동
 			// response.sendRedirect("/03_CAPTCHA/index.jsp");
 		} else {
 			out.println("<script>");
 			out.println("alert('검증에 실패했습니다.')");
-			out.println("location.href = 'Login'");
+			out.println("location.href = 'getCaptchaKey.do'");
 			out.println("</script>");
 			// 메시지 없이 이동
 			// response.sendRedirect("/03_CAPTCHA/Login");

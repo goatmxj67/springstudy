@@ -11,14 +11,14 @@ import javax.servlet.http.HttpSession;
 /**
  * http://localhost:9090/03_CAPTCHA/Login
  */
-@WebServlet("/Login")  // URL매핑값
-public class Login extends HttpServlet {
+@WebServlet("/getCaptchaKey.do")  // URL매핑값
+public class GetCaptchaKey extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public GetCaptchaKey() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,6 +36,8 @@ public class Login extends HttpServlet {
 		
 		// 1. 네이버에 캡차 키 요청하기
 		String key = CaptchaKey.getCaptchaKey();
+		
+		System.out.println("발급 캡차 키: " + key);
 		
 		// Login.java -> Loginvalidation.java  <key전달하기>
 		// 1). request 이용 (2번 전달)
@@ -69,7 +71,7 @@ public class Login extends HttpServlet {
 		// 3. 로그인 페이지(login.jsp)로 이동하기
 		// "캡차 이미지가 저장된 디렉터리 + 캡차 이미지 파일명"을 가지고 login.jsp로 이동한다.
 		// 즉, request의 정보를 유지한 상태로 이동한다. -> forward
-		request.getRequestDispatcher("findPw.jsp").forward(request, response);
+		request.getRequestDispatcher("findPwPage.do").forward(request, response);
 		
 	}
 

@@ -1,6 +1,9 @@
+<%@page import="java.net.URLDecoder"%>
 <%@page import="java.net.URLEncoder"%>
+<%@page import="com.koreait.file.dto.Board"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +14,7 @@
 		$(function(){
 			fn_update();
 			fn_delete();
+			fn_selectList();
 		});
 		function fn_update(){
 			$('#update_btn').click(function(){
@@ -26,6 +30,11 @@
 				}
 			});
 		}
+		function fn_selectList(){
+			$('#selectList_btn').click(function(){
+				location.href = 'selectBoardList.do';
+			})
+		}
 	</script>
 </head>
 <body>
@@ -35,14 +44,22 @@
 	<form id="f" method="post" enctype="multipart/form-data">
 	
 		<input type="button" value="수정하기" id="update_btn">
-		<input type="button" value="삭제하기" id="delete_btn"><br><br>
+		<input type="button" value="삭제하기" id="delete_btn">
+		<input type="button" value="목록보기" id="selectList_btn"><br><br>
 
 		<input type="hidden" name="no" value="${board.no}">
-		<input type="hidden" name="filename1" value="${filename}">  <!-- 서버에 첨부된 첨부파일명 -->
+		<input type="hidden" name="origin_filename" value="${board.origin_filename}">
+		<input type="hidden" name="save_filename" value="${board.save_filename}">
 
 		작성자<br>
 		${board.writer}<br><br>
 		
+		작성일<br>
+		${board.postdate}<br><br>
+
+		작성IP<br>
+		${board.ip}<br><br>
+
 		제목<br>
 		<input type="text" name="title" value="${board.title}"><br><br>
 		
@@ -50,10 +67,14 @@
 		<input type="text" name="content" value="${board.content}"><br><br>
 		
 		첨부 변경<br>
-		<input type="file" name="filename2"><br><br>
+		<input type="file" name="new_file"><br>
 		
-		첨부 이미지<br>
-		<img alt="${filename}" src="resources/archive/${filename}" style="width: 300px;">
+		<c:if test="${not empty board.origin_filename}">
+			기존에 ${board.origin_filename} 파일이 첨부되어 있습니다.<br><br>
+			첨부 이미지<br>
+			<img alt="${board.origin_filename}" src="resources/archive/${board.save_filename}" style="width: 300px;"><br>
+			<a href="download.do?no=${board.no}">다운로드</a>
+		</c:if>
 	
 	</form>
 	

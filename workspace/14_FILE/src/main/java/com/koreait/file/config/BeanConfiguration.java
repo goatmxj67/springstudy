@@ -71,7 +71,4 @@ public class BeanConfiguration {
 		return new DeleteBoardCommand();
 	}
 	
-	
-	
-	
 }

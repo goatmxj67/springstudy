@@ -9,11 +9,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 // 네이버 캡차 API 예제 - 키발급, 키 비교
 public class CaptchaValidation {
@@ -38,26 +37,23 @@ public class CaptchaValidation {
 		}
 
         String key = request.getSession().getAttribute("key").toString(); // 캡차 키 발급시 받은 키값
-        String value = request.getParameter("user_key"); // 사용자가 입력한 캡차 이미지 글자값
+        System.out.println("캡차 키 발급시 받은 키값 : " + key);
+        String value = request.getParameter("user_key1"); // 사용자가 입력한 캡차 이미지 글자값
+        System.out.println("사용자 입력: " + value);
         String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=" + code + "&key=" + key + "&value=" + value;
-
+        
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("X-Naver-Client-Id", clientId);
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         String responseBody = get(apiURL, requestHeaders);
+
+        System.out.println(responseBody);
         
         // responseBody : {"result":true, "responseTime":50.5}
-        JSONParser parser = new JSONParser();
-        JSONObject obj = null;
-        try {
-        	obj = (JSONObject)parser.parse(responseBody);
-        } catch (Exception e) {
-			e.printStackTrace();
-		}
+        JSONObject obj = new JSONObject(responseBody);
         
         return (boolean)obj.get("result");  // return true;
 
-        // System.out.println(responseBody);
     }
 
     private static String get(String apiUrl, Map<String, String> requestHeaders){

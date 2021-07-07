@@ -6,41 +6,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.koreait.file.dao.BoardDAO">
 
 	<select id="selectBoardList" resultType="com.koreait.file.dto.Board">
-		SELECT NO, WRITER, TITLE, CONTENT, FILENAME, POSTDATE
+		SELECT NO, WRITER, TITLE, CONTENT, IP, ORIGIN_FILENAME, SAVE_FILENAME, POSTDATE
 		  FROM BOARD
 		 ORDER BY NO DESC
 	</select>
 	
 	<insert id="insertBoard">
 		INSERT INTO BOARD
-		VALUES (BOARD_SEQ.NEXTVAL, #{param1}, #{param2}, #{param3}, #{param4}, SYSDATE)
+		VALUES (BOARD_SEQ.NEXTVAL, #{writer}, #{title}, #{content}, #{ip}, #{origin_filename}, #{save_filename}, SYSDATE)
 	</insert>
 	
 	<select id="selectBoardByNo" resultType="com.koreait.file.dto.Board">
-		SELECT NO, WRITER, TITLE, CONTENT, FILENAME, POSTDATE
+		SELECT NO, WRITER, TITLE, CONTENT, IP, ORIGIN_FILENAME, SAVE_FILENAME, POSTDATE
 		  FROM BOARD
-		 WHERE NO = #{param1}
+		 WHERE NO = #{no}
 	</select>
 	
 	<update id="updateBoard">
 		UPDATE BOARD
-		   SET TITLE = #{param1}
-		     , CONTENT = #{param2}
-		     , FILENAME = #{param3}
-		 WHERE NO = #{param4}
+		   SET TITLE = #{title}
+		     , CONTENT = #{content}
+		     , ORIGIN_FILENAME = #{origin_filename}
+		     , SAVE_FILENAME = #{save_filename}
+		 WHERE NO = #{no}
 	</update>
 	
 	<delete id="deleteBoard">
-		DELETE 
+		DELETE
 		  FROM BOARD
-		 WHERE NO = #{param1}
+		 WHERE NO = #{no}
 	</delete>
-	
-	
-	
-	
-	
-	
-	
 
 </mapper>

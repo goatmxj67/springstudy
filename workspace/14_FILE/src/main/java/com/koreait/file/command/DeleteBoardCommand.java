@@ -23,9 +23,9 @@ public class DeleteBoardCommand implements BoardCommand {
 		boardDAO.deleteBoard(no);
 		
 		// 첨부 삭제
-		String filename1 = multipartRequest.getParameter("filename1");
+		String save_filename = multipartRequest.getParameter("save_filename");
 		String realPath = multipartRequest.getServletContext().getRealPath("resources/archive");
-		File file = new File(realPath, filename1);
+		File file = new File(realPath, save_filename);
 		if (file != null) {
 			if (file.exists()) {
 				file.delete();

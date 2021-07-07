@@ -77,7 +77,7 @@ public class BoardController {
 						 Model model) {
 		model.addAttribute("request", request);
 		model.addAttribute("response", response);
-		downloadCommand.execute(model);
+		downloadCommand.execute(sqlSession, model);
 	}
 	
 	@GetMapping(value="selectBoardByNo.do")
@@ -103,10 +103,5 @@ public class BoardController {
 		deleteBoardCommand.execute(sqlSession, model);
 		return "redirect:selectBoardList.do";
 	}
-	
-	
-	
-	
-	
 	
 }

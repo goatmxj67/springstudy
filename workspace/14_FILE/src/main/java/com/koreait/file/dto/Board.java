@@ -3,12 +3,14 @@ package com.koreait.file.dto;
 import java.sql.Date;
 
 public class Board {
-
+	
 	private long no;
-	private String writer;
+	private String writer; 
 	private String title;
 	private String content;
-	private String filename;
+	private String ip;
+	private String origin_filename;
+	private String save_filename;
 	private Date postdate;
 	
 	public long getNo() {
@@ -35,11 +37,23 @@ public class Board {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getFilename() {
-		return filename;
+	public String getIp() {
+		return ip;
 	}
-	public void setFilename(String filename) {
-		this.filename = filename;
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+	public String getOrigin_filename() {
+		return origin_filename;
+	}
+	public void setOrigin_filename(String origin_filename) {
+		this.origin_filename = origin_filename;
+	}
+	public String getSave_filename() {
+		return save_filename;
+	}
+	public void setSave_filename(String save_filename) {
+		this.save_filename = save_filename;
 	}
 	public Date getPostdate() {
 		return postdate;
@@ -49,8 +63,9 @@ public class Board {
 	}
 	@Override
 	public String toString() {
-		return "Board [no=" + no + ", writer=" + writer + ", title=" + title + ", content=" + content + ", filename="
-				+ filename + ", postdate=" + postdate + "]";
+		return "Board [no=" + no + ", writer=" + writer + ", title=" + title + ", content=" + content + ", ip=" + ip
+				+ ", origin_filename=" + origin_filename + ", save_filename=" + save_filename + ", postdate=" + postdate
+				+ "]";
 	}
 	
 }

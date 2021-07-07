@@ -12,15 +12,17 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 
-public class DownloadCommand {
+import com.koreait.file.dao.BoardDAO;
+import com.koreait.file.dto.Board;
 
-	// DB 접근이 없는 Command이기 때문에 SqlSession을 사용하지 않는다.
-	// 따라서, BoardCommand를 구현하지 않아도 상관 없다. (구현해도 상관 없다.)
+public class DownloadCommand implements BoardCommand {
 	
-	public void execute(Model model) {
+	@Override
+	public void execute(SqlSession sqlSession, Model model) {
 		
 		Map<String, Object> map = model.asMap();
 		HttpServletRequest request = (HttpServletRequest)map.get("request");
@@ -28,32 +30,27 @@ public class DownloadCommand {
 		
 		String realPath = request.getServletContext().getRealPath("resources/archive");
 
-		// DB와 서버에 저장된 파일명
-		String filename = request.getParameter("filename");
-		System.out.println(filename);
+		long no = Long.parseLong(request.getParameter("no"));
 		
-		// 파일명 원상 복구 (선택)
-		String extension = filename.substring( filename.lastIndexOf(".") + 1 );
-		String originalFilename = filename.substring( 0, filename.lastIndexOf("_") );
-		String downloadFilename = originalFilename + "." + extension;
+		BoardDAO boardDAO = sqlSession.getMapper(BoardDAO.class);
+		Board board = boardDAO.selectBoardByNo(no);
 		
 		// 다운로드 할 File 생성
-		File download = new File(realPath, filename);  // 서버에서 찾아야 하는 파일명을 작성
+		File download_file = new File(realPath, board.getSave_filename());  // 서버에서 찾아야 하는 파일명을 작성
 		
 		// 스트림 준비
 		BufferedInputStream bis = null;
 		BufferedOutputStream bos = null;
-		
+
 		try {
 			
 			// response 다운로드 처리
 			response.setHeader("Content-Type", "applicaion/x-msdownload");
-			response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(downloadFilename, "utf-8"));
-			// response.setHeader("Content-Disposition", "attachment; filename=" + downloadFilename);
-			response.setHeader("Content-Length", download.length() + "");
+			response.setHeader("Content-Disposition", "attachment; filename=" + URLEncoder.encode(board.getOrigin_filename(), "utf-8").replaceAll("\\+", " "));
+			response.setHeader("Content-Length", download_file.length() + "");
 			
 			// 서버에 저장된 download할 파일을 읽는 스트림
-			bis = new BufferedInputStream(new FileInputStream(download));
+			bis = new BufferedInputStream(new FileInputStream(download_file));
 			
 			// 사용자에게 파일을 생성하는 출력 스트림
 			bos = new BufferedOutputStream(response.getOutputStream());

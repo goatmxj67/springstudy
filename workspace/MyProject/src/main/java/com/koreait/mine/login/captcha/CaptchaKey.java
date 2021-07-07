@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 
 // 네이버 캡차 API 예제 - 키발급
@@ -34,17 +33,11 @@ public class CaptchaKey {
         requestHeaders.put("X-Naver-Client-Id", clientId);
         requestHeaders.put("X-Naver-Client-Secret", clientSecret);
         String responseBody = get(apiURL, requestHeaders);
+        // System.out.println(responseBody);
+        // responseBody : {"key":"67ANaZxlcTTIcaCS"}
         
-        // responseBody : {"key": MoFkByIlbWTpHbUYkrks"}
-        JSONParser parser = new JSONParser();
-        JSONObject obj = null;
-        try {
-        	obj = (JSONObject)parser.parse(responseBody);
-        } catch (Exception e) {
-			e.printStackTrace();
-		}
-        // JSONObject는 Map 인터페이스를 구현한 클래스이다. (Map과 사용법이 같다.)
-        return obj.get("key").toString();  // return "MoFkByIlbWTpHbUYkrks";
+        JSONObject obj = new JSONObject(responseBody);
+        return obj.getString("key");  // return "67ANaZxlcTTIcaCS";
 
     }
 
