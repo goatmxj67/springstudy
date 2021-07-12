@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.koreait.test1.dao.board">
+
+	<select id="selectBoardList" resultType="com.koreait.test1.dto.BoardDTO">
+		SELECT BIDX, BTITLE, BWRITER, BCONTENT, BDATE
+		  FROM BOARD
+      ORDER BY BIDX DESC
+	</select>
+	
+	<insert id="insertBoard">
+		INSERT INTO 
+		 BOARD (BIDX, BWRITER, BTITLE, BCONTENT, BDATE)
+		VALUES (BOARD_SEQ.NEXTVAL, #{param1}, #{param2}, #{param3}, SYSDATE)
+	</insert>
+
+	<select id="selectBybIdx" resultType="com.koreait.test1.dto.BoardDTO">
+		SELECT BIDX, BTITLE, BWRITER, BCONTENT, BDATE
+		  FROM BOARD
+		 WHERE BIDX = #{bIdx}
+	</select>
+	
+	<update id="updateBoard">
+		UPDATE BOARD
+		   SET BTITLE = #{param1},
+		       BCONTENT = #{param2}
+		 WHERE BIDX = #{param3}
+	</update>
+
+	<delete id="deleteBoard">
+		DELETE 
+		  FROM BOARD
+		 WHERE BIDX = #{bIdx}
+	</delete>
+	
+</mapper>
