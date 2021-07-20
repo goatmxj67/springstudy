@@ -10,8 +10,8 @@
 	<script type="text/javascript">
 		// 페이지 로드
 		$(document).ready(function(){
-			fn_presentPwCheck();
 			fn_updatePw();
+			fn_presentPwCheck();
 			fn_updateMember();
 			fn_emailCheck();
 			fn_email_code();
@@ -21,24 +21,22 @@
 		var presentPwPass = false;
 		function fn_presentPwCheck(){
 			$('#mPw0').keyup(function(){
-				var obj = { // 현재 비밀번호 객체 생성
-						mPw : $('#mPw0').val()
+				var obj = {
+					pw: $('#mPw0').val()
 				};
 				$.ajax({
 					url: 'presentPwCheck.do',
 					type: 'post',
-					data: JSON.stringify(obj), // 보내는 data 문자열화
-					contentType: 'application/json', // 보내는 데이터가 json일 때 필수 옵션
-					dataType: 'json', // 받는 data
+					contentType: 'application/json',
+					data: JSON.stringify(obj),
+					dataType: 'json',
 					success: function(resultMap){
-						if(resultMap.isCorrect){ // session에 저장된 암호화 된 비밀번호와 일치할 경우 통과
+						console.log(resultMap.isCorrect);
+						if (resultMap.isCorrect) {
 							presentPwPass = true;
-						} else{
+						} else {
 							presentPwPass = false;
 						}
-					},
-					error: function(xhr, textStatus, errorThrown) {
-						
 					}
 				});
 			});
@@ -46,12 +44,12 @@
 		// 비밀번호 변경(updatePw)
 		function fn_updatePw(){
 			$('#pw_btn').click(function(){
-				if(!presentPwPass){ // 현재 비밀번호를 입력하지 않을 경우
-					alert('현재 비밀번호가 일치하지 않습니다. 확인해주세요.');
+				if($('#mPw0').val() == ''){ // 현재 비밀번호를 입력하지 않을 경우
+					alert('현재 비밀번호를 입력하세요.');
 					$('#mPw0').focus();
 					return false;
-				} else if($('#mPw0').val() == ''){ // 위 현재 비밀번호 통과를 안 했을 경우(기존 비밀번호와 일치하지 않을 경우)
-					alert('현재 비밀번호를 입력하세요.');
+				} else if(!presentPwPass){ // 위 현재 비밀번호 통과를 안 했을 경우(기존 비밀번호와 일치하지 않을 경우)
+					alert('현재 비밀번호가 일치하지 않습니다. 확인해주세요.');
 					$('#mPw0').focus();
 					return false;
 				} else if($('#mPw').val() == ''){ // 새로운 비밀번호를 입력하지 않을 경우
@@ -191,7 +189,7 @@
 		<input type="text" name="mId" id="mId" value="${loginUser.MId}" readonly><br><br>
 		
 		현재 비밀번호<br>
-		<input type="password" name="mPw0" id="mPw0"><br><br>
+		<input type="text" name="mPw0" id="mPw0" value="${loginUser.MPw}"><br><br>
 		새 비밀번호<br>
 		<input type="password" name="mPw" id="mPw"><br><br>
 		새 비밀번호 확인<br>

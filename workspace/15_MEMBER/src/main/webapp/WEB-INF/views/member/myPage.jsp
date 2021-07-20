@@ -30,8 +30,8 @@
 				$.ajax({
 					url: 'presentPwCheck.do',
 					type: 'post',
-					contentType: 'application/json',
 					data: JSON.stringify(obj),
+					contentType: 'application/json',
 					dataType: 'json',
 					success: function(resultMap){
 						console.log(resultMap.isCorrect);

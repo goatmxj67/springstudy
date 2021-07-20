@@ -24,12 +24,11 @@
 					$('#mEmail').focus();
 					return false;
 				}
-				
-				var obj = { // 이름과 이메일 객체 생성
+				// 이름과 이메일 객체 생성
+				var obj = { 
 						mName : $('#mName').val(),
 						mEmail : $('#mEmail').val()
 				};
-				
 				$.ajax({
 					url: 'findId.do',
 					type: 'post',
@@ -41,12 +40,10 @@
 							alert('입력하신 정보와 일치하는 계정이 없습니다.');
 							return false;
 						} else if(resultMap.status == 200){
-							alert("회원님이 찾으시는 ID는" + resultMap.mId + "입니다.");
-							return false;
+							alert("회원님이 찾으시는 아이디는" + resultMap.mId + "입니다.");
+							$('#mName').val('');
+							$('#mEmail').val('');
 						}
-					},
-					error: function(xhr, textStatus, errorThrown) {
-						
 					}
 				});
 			});
@@ -79,23 +76,25 @@
 		<input type="radio" name="find" id="findPw" value="2">
 		<label for="findPw">비밀번호 찾기</label>
 	</div>
-	
+	<hr>
 	<!-- 아이디 찾기 화면 -->
 	<div id="findId_form">
-		<form id="f" method="post">
+		<p>가입 당시 이름과 이메일을 입력하세요.</p>
+		<form id="f1">
 			<!-- 이름 -->
 			<div class="form_group">
 				<label for="mName">이름</label><br>
 				<input type="text" name="mName" id="mName" placeholder="ex) 홍길동">
-			</div>
+			</div><br>
 			<!-- 이메일 -->
 			<div class="form_group">
 				<label for="mEmail">이메일</label><br>
 				<input type="text" name="mEmail" id="mEmail" placeholder="ex) hong@naver.com">
-			</div>
+			</div><br>
 			<!-- 확인 버튼 -->
 			<div class="form_group">
 				<input type="button" id="findId_btn" value="확인">
+				<input type="reset" value="초기화">
 			</div>
 		</form>
 	</div>
@@ -103,20 +102,22 @@
 	
 	<!-- 비밀번호 찾기 화면 -->
 	<div id="findPw_form" style="display: none;"> <!-- 처음에는 보이지 않고 비번찾기 시에 화면 나타내기 -->
-		<form id="f2" method="post">
+		<form id="f2">
+			<p>가입 당시 아이디와 이메일을 입력하세요.</p>
 			<!-- 아이디 -->
 			<div class="form_group">
 				<label for="mId">아이디</label><br>
 				<input type="text" name="mId" id="mId" placeholder="ex) hong">
-			</div>
+			</div><br>
 			<!-- 이메일 -->
 			<div class="form_group">
 				<label for="mEmail2">이메일</label><br>
 				<input type="text" name="mEmail2" id="mEmail2" placeholder="ex) hong@naver.com">
-			</div>
+			</div><br>
 			<!-- 확인 버튼 -->
 			<div class="form_group">
 				<input type="button" id="findPw_btn" value="확인">
+				<input type="reset" value="초기화">
 			</div>
 		</form>
 	</div>
@@ -124,7 +125,6 @@
 	
 	<input type="button" value="로그인" onclick="location.href='index.do'">
 	<input type="button" value="회원가입" onclick="location.href='joinPage.do'">
-
 
 </body>
 </html>

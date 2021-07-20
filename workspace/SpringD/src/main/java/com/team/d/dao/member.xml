@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 아이디 찾기(findId) -->
 	<select id="findId" resultType="com.team.d.dto.MemberDTO">
-		SELECT MID, MREGDATE
+		SELECT MID
 		  FROM MEMBER
 		 WHERE MNAME = #{mName}
 		   AND MEMAIL = #{mEmail}
