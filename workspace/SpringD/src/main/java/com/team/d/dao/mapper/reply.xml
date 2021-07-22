@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.team.d.dao.ReplyDAO">
+
+	<insert id="insertReply" parameterType="com.team.d.dto.ReplyDTO">
+		INSERT INTO BOARD_REPLY VALUES(BOARD_REPLY_SEQ.NEXTVAL, #{MId}, #{RContent}, 0 ,#{BIdx}, SYSDATE)
+	</insert>
+	
+	<select id="getReplyListByBidx" resultType="com.team.d.dto.ReplyDTO">
+		SELECT RIDX, RCONTENT, PARENT, MID, BIDX, RPOSTDATE
+		  FROM BOARD_REPLY
+		 WHERE BIDX = #{BIDX}
+	</select>
+</mapper>

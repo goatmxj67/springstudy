@@ -14,7 +14,7 @@
 			fn_pwCheck();
 			fn_pwCheck2();
 			fn_emailCheck();
-			fn_email_code();
+			fn_emailCode();
 			fn_phoneCheck();
 			fn_join();
 		});
@@ -22,8 +22,9 @@
 		var idPass = false;
 		function fn_idCheck(){
 			$('#mId').keyup(function(){
+				// 아이디 정규식
 				var regId = /^[a-z]{3,6}$/;
-				if(!regId.test($('#mId').val())){ // ID 정규식 조건을 통과하지 못 했을 경우
+				if(!regId.test($('#mId').val())){ // 아이디 정규식 조건을 통과하지 못 했을 경우
 					$('.id_result').text('아이디는 영어 소문자 3~6자리만 입력 가능합니다.');
 					// 실제 사용할 ID 정규식
 					// ^[a-z][a-z0-9_-]{4,19}$
@@ -54,8 +55,9 @@
 		var pwPass = false;
 		function fn_pwCheck(){
 			$('#mPw').keyup(function(){
+				// 비밀번호 정규식
 				var regPW = /^[0-9]{4}$/; 
-				if(regPW.test($('#mPw').val())){ // PW 정규식 조건을 통과 했을 경우
+				if(regPW.test($('#mPw').val())){ // 비밀번호 정규식 조건을 통과 했을 경우
 					$('.pw_result').text('사용 가능한 비밀번호입니다.');
 					pwPass = true;
 				} else{
@@ -84,6 +86,12 @@
 		var emailPass = false;
 		function fn_emailCheck(){
 			$('#mEmail').keyup(function(){
+				// 이메일 정규식
+				var regEmail = /^[a-z0-9][a-z0-9_-]*@[a-zA-Z0-9]+([.][a-zA-Z]{2,}){1,2}$/;
+				if(!regEmail.test($('#mEmail').val())){ // 이메일 정규식 조건을 통과하지 못 했을 경우
+					$('.email_result').text('이메일 형식에 맞지 않습니다. 다시 입력하세요.');
+					return false;
+				}
 				$.ajax({
 					url: 'emailCheck.do',
 					type: 'get',
@@ -107,8 +115,8 @@
 		}
 		// 이메일 인증코드 받기(emailCode)
 		// 이메일 인증코드 받기(root-context에서 이메일 bean 생성)
-		function fn_email_code(){
-			$('#email_code_btn').click(function(){
+		function fn_emailCode(){
+			$('#emailCode_btn').click(function(){
 				if($('#mEmail').val() == ''){
 					alert('이메일을 입력하세요.');
 					$('#mEmail').focus();
@@ -121,7 +129,7 @@
 					dataType: 'json',
 					success: function(resultMap){
 						alert('인증코드가 발송되었습니다. 메일을 확인하세요.');
-						fn_email_auth(resultMap.authCode);
+						fn_emailAuth(resultMap.authCode);
 					},
 					error: function(xhr, textStatus, errorThrown) {
 						
@@ -131,9 +139,9 @@
 		}
 		// 이메일 인증(emailAuth)
 		var authPass = false;
-		function fn_email_auth(authCode){
-			$('#email_auth_btn').click(function(){
-				if(authCode == $('#user_key').val()){ // 받은 인증코드와 입력된 값이 같을 경우
+		function fn_emailAuth(authCode){
+			$('#emailAuth_btn').click(function(){
+				if(authCode == $('#userKey').val()){ // 받은 인증코드와 입력된 값이 같을 경우
 					$('.emailAuth_result').text('인증되었습니다.');
 					authPass = true;
 				} else{
@@ -147,14 +155,15 @@
 		var phonePass = false;
 		function fn_phoneCheck(){
 			$('#mPhone').keyup(function(){
-				var regPhone = /^010[0-9]{8}$/;
-				if(regPhone.test($('#mPhone').val())){ // Phone 정규식 조건을 통과했을 경우
+				// 전화번호 정규식
+				var regPhone = /^010[0-9]{3,4}[0-9]{4}$/;
+				if(regPhone.test($('#mPhone').val())){ // 전화번호 정규식 조건을 통과 했을 경우
+					$('.phone_result').text('');
 					phonePass = true;
 				} else{
 					$('.phone_result').text('010을 포함하여 -(하이픈) 없이 입력하세요.');
 					phonePass = false;
 				}
-				
 			});
 		}
 		// 회원가입(join)
@@ -194,10 +203,10 @@
 	<div class="join_form">
 		<form id="f" method="post">
 			<span class="naming">이름</span><br>
-			<input type="text" name="mName" id="mName"><br><br>
+			<input type="text" name="mName" id="mName" placeholder="ex) 홍길동 or hong"><br><br>
 			
 			<span class="naming">아이디</span><br>
-			<input type="text" name="mId" id="mId"><br>
+			<input type="text" name="mId" id="mId" placeholder="ex) hong123"><br>
 			<span class="id_result"></span><br><br>
 			
 			<span class="naming">비밀번호</span><br>
@@ -206,18 +215,18 @@
 			
 			<span class="naming">비밀번호 확인</span><br>
 			<input type="password" name="mPw2" id="mPw2"><br>
-			<span class="pw2_result"></span><br><br>	
+			<span class="pw2_result"></span><br><br>
 	
 			<span class="naming">이메일</span><br>
-			<input type="text" name="mEmail" id="mEmail"><br>
+			<input type="text" name="mEmail" id="mEmail" placeholder="ex) hong123@example.com"><br>
 			<span class="email_result"></span><br><br>
-			<input type="button" value="인증코드 받기" id="email_code_btn"><br>
-			<input type="text" name="user_key" id="user_key">
-			<input type="button" value="인증하기" id="email_auth_btn"><br>
+			<input type="button" value="인증코드 받기" id="emailCode_btn"><br>
+			<input type="text" name="userKey" id="userKey">
+			<input type="button" value="인증하기" id="emailAuth_btn"><br>
 			<span class="emailAuth_result"></span><br><br>
 			
 			<span class="naming">전화번호</span><br>
-			<input type="text" name="mPhone" id="mPhone"><br>
+			<input type="text" name="mPhone" id="mPhone" placeholder="-(하이픈)없이 입력"><br>
 			<span class="phone_result"></span><br><br>
 			
 			<input type="button" value="가입하기" id="join_btn">

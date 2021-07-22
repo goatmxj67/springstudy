@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.ui.Model;
 
 import com.team.d.dto.MemberDTO;
-import com.team.d.util.SecurityUtils;
+import com.team.d.utils.SecurityUtils;
 
 public class PresentPwCheckCommand {
 

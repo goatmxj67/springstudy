@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.ui.Model;
 
-import com.team.d.util.SecurityUtils;
+import com.team.d.utils.SecurityUtils;
 
 public class EmailAuthCommand {
 

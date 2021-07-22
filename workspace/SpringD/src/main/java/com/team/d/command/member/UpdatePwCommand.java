@@ -1,5 +1,6 @@
 package com.team.d.command.member;
 
+import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +12,7 @@ import org.springframework.ui.Model;
 
 import com.team.d.dao.MemberDAO;
 import com.team.d.dto.MemberDTO;
-import com.team.d.util.SecurityUtils;
+import com.team.d.utils.SecurityUtils;
 
 public class UpdatePwCommand implements MemberCommand {
 
@@ -38,7 +39,8 @@ public class UpdatePwCommand implements MemberCommand {
 		
 		try {
 			response.setContentType("text/html; charset=utf-8");
-			if (result > 0) { // 비밀번호 변경 성공
+			if (result > 0) { // 비밀번호 변경 성공 후 다시 로그인
+				session.invalidate();
 				response.getWriter().append("<script>");
 				response.getWriter().append("alert('비밀번호가 변경되었습니다. 변경된 비밀번호로 로그인하세요.');");
 				response.getWriter().append("location.href='index.do';");
@@ -49,7 +51,7 @@ public class UpdatePwCommand implements MemberCommand {
 				response.getWriter().append("history.back();");
 				response.getWriter().append("</script>");
 			} 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 

@@ -4,52 +4,18 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>아이디 찾기</title>
+	<title>아이디/비밀번호 찾기</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 	<script type="text/javascript">
 		// 페이지 로드
 		$(document).ready(function(){
+			fn_findCheck();
 			fn_findId();
-			fn_find_check();
+			fn_findPw();
+			fn_emailCheck();
 		})
-		// 아이디 찾기(findId)
-		function fn_findId(){
-			$('#findId_btn').click(function(){
-				if($('#mName').val() == ''){
-					alert('이름을 입력하세요');
-					$('#mName').focus();
-					return false;
-				} else if($('#mEmail').val() == ''){
-					alert('이메일을 입력하세요.');
-					$('#mEmail').focus();
-					return false;
-				}
-				// 이름과 이메일 객체 생성
-				var obj = { 
-						mName : $('#mName').val(),
-						mEmail : $('#mEmail').val()
-				};
-				$.ajax({
-					url: 'findId.do',
-					type: 'post',
-					data: JSON.stringify(obj), // 보내는 data 문자열화
-					contentType : 'application/json; charset=utf-8', // 보내는 데이터가 json일 때 필수 옵션
-					dataType: 'json', // 받는 data
-					success: function(resultMap){
-						if(resultMap.status == 500){
-							alert('입력하신 정보와 일치하는 계정이 없습니다.');
-							return false;
-						} else if(resultMap.status == 200){
-							alert("회원님이 찾으시는 아이디는" + resultMap.mId + "입니다.");
-							$('#mName').val('');
-							$('#mEmail').val('');
-						}
-					}
-				});
-			});
-		}
 		// 아이디/비밀번호 찾기 radio 체크에 따른 화면 전환
-		function fn_find_check(){
+		function fn_findCheck(){
 			$('input[type=radio][name=find]').on('click', function(){
 				var chkValue = $('input[type=radio][name=find]:checked').val();
 				if(chkValue == '1'){
@@ -61,7 +27,131 @@
 				}
 			});
 		}
-		
+		// 아이디 찾기(findId)
+		function fn_findId(){
+			$('#findId_btn').click(function(){
+				if($('#mName').val() == '' || $('#mEmail').val() == ''){ // 이름, 이메일 중 하나라도 입력 값이 없다면
+					alert('이름과 이메일 모두 입력하세요');
+					return false;
+				} 
+				// 이름과 이메일 객체 생성(post 방식) : presentPwCheck와 마찬가지로 jackson lib 오류
+				/*var obj = { 
+						mName : $('#mName').val(),
+						mEmail : $('#mEmail').val()
+				}; */
+				$.ajax({
+					url: 'findId.do',
+					type: 'get',
+					// data: JSON.stringify(obj),
+					data: 'mName=' + $('#mName').val() + '&mEmail=' + $('#mEmail').val(),
+					dataType: 'json',
+					success: function(resultMap){
+						if(resultMap.status == 500){ // 이름과 이메일이 일치하지 않을 경우
+							alert('입력하신 정보와 일치하는 계정이 없습니다.');
+							$('#mName').val('');
+							$('#mEmail').val('');
+							return false;
+						} else if(resultMap.status == 200){ // 이름과 이메일이 일치할 경우 mId 반환
+							alert("회원님이 찾으시는 아이디는 " + resultMap.mId + " 입니다.");
+							$('#mName').val('');
+							$('#mEmail').val('');
+						}
+					},
+					error: function(xhr, textStatus, errorThrown) {
+						
+					}
+				});
+			});
+		}
+		// 비밀번호 찾기(findPw) : 이메일 인증 필요(mEmail2)
+		function fn_findPw(){
+			// 이메일 인증코드 버튼 비활성화(아이디, 이메일 확인 전까지 인증절차를 막기 위함)
+			$('#emailCode_btn').click(function(){ }).prop("disabled", true); 
+			$('#findPw_btn').click(function(){
+				if($('#mId').val() == '' || $('#mEmail2').val() == ''){
+					alert('아이디와 이메일 모두 입력하세요');
+					return false;
+				}
+				$.ajax({
+					url: 'findPw.do',
+					type: 'get',
+					data: 'mId=' + $('#mId').val() + '&mEmail=' + $('#mEmail2').val(),
+					dataType: 'json',
+					success: function(resultMap){
+						if(resultMap.status == 500){ // 아이디와 이메일이 일치하지 않을 경우
+							$('.email2_result').text('입력하신 아이디와 이메일이 일치하지 않습니다. 확인하세요.');
+							$('#mId').val('');
+							$('#mEmail2').val('');
+							return false;
+						} else if(resultMap.status == 200){ // 아이디와 이메일이 일치할 경우 인증코드 버튼 활성화
+							$('#emailCode_btn').click(function(){ }).prop("disabled", false);
+							$('.email2_result').text("입력하신 정보가 확인되었습니다. 인증코드를 받으세요.");
+							fn_emailCode();
+						}
+					},
+					error: function(xhr, textStatus, errorThrown) {
+						
+					}
+				});
+			});
+		}
+		// 이메일 인증코드 받기(emailCode)
+		function fn_emailCode(){
+			$('#emailCode_btn').click(function(){
+				$.ajax({
+					url: 'emailCode.do',
+					type: 'get',
+					data: 'mEmail=' + $('#mEmail2').val(),
+					dataType: 'json',
+					success: function(resultMap) {
+						alert('인증코드가 발송되었습니다.');
+						fn_emailAuth(resultMap.authCode);
+					},
+					error: function(xhr, textStatus, errorThrown) {
+						
+					}
+				});
+			});
+		}
+		// 이메일 인증(emailAuth)
+		function fn_emailAuth(authCode) {
+			$('#emailAuth_btn').click(function() {
+				if(authCode == $('#userKey').val()) { // 받은 인증코드와 입력된 값이 같을 경우
+					alert('인증되었습니다. 비밀번호 변경 페이지로 이동합니다.');
+					$('#f2').attr('action', 'changePwPage.do');
+					$('#f2').submit();
+				} else{
+					alert('인증에 실패했습니다. 인증코드를 정확히 입력하세요.');
+					history.back();
+				}
+			});
+		}
+		// 이메일 정규식(emailCheck)
+		function fn_emailCheck(){
+			$('#mEmail').keyup(function(){
+				// 이메일 정규식
+				var regEmail = /^[a-z0-9][a-z0-9_-]*@[a-zA-Z0-9]+([.][a-zA-Z]{2,}){1,2}$/;
+				if(!regEmail.test($('#mEmail').val())){ // 이메일 정규식 조건을 통과하지 못 했을 경우
+					$('.email_result').text('이메일 형식에 맞지 않습니다. 다시 입력하세요.');
+					return false;
+				} else{
+					$('.email_result').text('');
+					return true;
+				}
+			});
+			
+			$('#mEmail2').keyup(function(){
+				// 이메일 정규식
+				var regEmail = /^[a-z0-9][a-z0-9_-]*@[a-zA-Z0-9]+([.][a-zA-Z]{2,}){1,2}$/;
+				if(!regEmail.test($('#mEmail2').val())){ // 이메일 정규식 조건을 통과하지 못 했을 경우
+					$('.email2_result').text('이메일 형식에 맞지 않습니다. 다시 입력하세요.');
+					return false;
+				} else{
+					$('.email2_result').text('');
+					return true;
+				}
+			});
+		}
 	</script>
 </head>
 <body>
@@ -77,6 +167,7 @@
 		<label for="findPw">비밀번호 찾기</label>
 	</div>
 	<hr>
+	
 	<!-- 아이디 찾기 화면 -->
 	<div id="findId_form">
 		<p>가입 당시 이름과 이메일을 입력하세요.</p>
@@ -89,12 +180,12 @@
 			<!-- 이메일 -->
 			<div class="form_group">
 				<label for="mEmail">이메일</label><br>
-				<input type="text" name="mEmail" id="mEmail" placeholder="ex) hong@naver.com">
+				<input type="text" name="mEmail" id="mEmail" placeholder="ex) hong@example.com"><br>
+				<span class="email_result"></span><br>
 			</div><br>
 			<!-- 확인 버튼 -->
 			<div class="form_group">
 				<input type="button" id="findId_btn" value="확인">
-				<input type="reset" value="초기화">
 			</div>
 		</form>
 	</div>
@@ -102,23 +193,30 @@
 	
 	<!-- 비밀번호 찾기 화면 -->
 	<div id="findPw_form" style="display: none;"> <!-- 처음에는 보이지 않고 비번찾기 시에 화면 나타내기 -->
-		<form id="f2">
-			<p>가입 당시 아이디와 이메일을 입력하세요.</p>
+		<p>가입 당시 아이디와 이메일을 입력하세요.(이메일 인증 필요)</p>
+		<form id="f2" method="post">
 			<!-- 아이디 -->
 			<div class="form_group">
 				<label for="mId">아이디</label><br>
-				<input type="text" name="mId" id="mId" placeholder="ex) hong">
+				<input type="text" name="mId" id="mId" placeholder="ex) hong123">
 			</div><br>
 			<!-- 이메일 -->
 			<div class="form_group">
 				<label for="mEmail2">이메일</label><br>
-				<input type="text" name="mEmail2" id="mEmail2" placeholder="ex) hong@naver.com">
+				<input type="text" name="mEmail" id="mEmail2" placeholder="ex) hong@example.com"><br>
+				<span class="email2_result"></span><br>
 			</div><br>
 			<!-- 확인 버튼 -->
 			<div class="form_group">
 				<input type="button" id="findPw_btn" value="확인">
-				<input type="reset" value="초기화">
-			</div>
+			</div><br><br>
+		</form>
+		
+		<form id="f3">
+			<input type="button" id="emailCode_btn" value="인증코드 받기"><br>
+			<input type="text" name="userKey" id="userKey">
+			<input type="button" id="emailAuth_btn" value="인증하기"><br><br>
+			<span class="emailAuth_result"></span><br>
 		</form>
 	</div>
 	<br><br>

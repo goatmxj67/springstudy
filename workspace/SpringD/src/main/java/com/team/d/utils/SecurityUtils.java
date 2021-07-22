@@ -1,4 +1,4 @@
-package com.team.d.util;
+package com.team.d.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

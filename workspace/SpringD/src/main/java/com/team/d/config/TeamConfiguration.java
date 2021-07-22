@@ -7,6 +7,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import com.team.d.command.board.BoardListCommand;
+import com.team.d.command.board.DeleteBoardCommand;
+import com.team.d.command.board.InsertBoardCommand;
+import com.team.d.command.board.SearchBoardCommand;
+import com.team.d.command.board.SelectNoticeCommand;
+import com.team.d.command.board.ShowBoardCommand;
+import com.team.d.command.board.UpdateBoardCommand;
+import com.team.d.command.board.UpdateBoardPageCommand;
+import com.team.d.command.member.AdminLoginCommand;
+import com.team.d.command.member.ChangePwCommand;
 import com.team.d.command.member.EmailAuthCommand;
 import com.team.d.command.member.EmailCheckCommand;
 import com.team.d.command.member.FindIdCommand;
@@ -19,6 +29,8 @@ import com.team.d.command.member.LogoutCommand;
 import com.team.d.command.member.PresentPwCheckCommand;
 import com.team.d.command.member.UpdateMemberCommand;
 import com.team.d.command.member.UpdatePwCommand;
+import com.team.d.command.reply.GetReplyListCommand;
+import com.team.d.command.reply.InsertReplyCommand;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -31,7 +43,7 @@ public class TeamConfiguration {
 		HikariConfig hikariConfig = new HikariConfig();
 		hikariConfig.setDriverClassName("oracle.jdbc.OracleDriver");
 		hikariConfig.setJdbcUrl("jdbc:oracle:thin:@127.0.0.1:1521:xe");
-		hikariConfig.setUsername("SERVER_USER");
+		hikariConfig.setUsername("spring");
 		hikariConfig.setPassword("1111");
 		return hikariConfig;
 	}
@@ -45,7 +57,7 @@ public class TeamConfiguration {
 	public SqlSessionFactory sqlSessionFactory() throws Exception {
 		SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
 		sqlSessionFactory.setDataSource(hikariDataSource());
-		sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:com/team/d/dao/*.xml"));
+		sqlSessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:com/team/d/dao/mapper/*.xml"));
 		return sqlSessionFactory.getObject();
 	}
 	/* SqlSession */
@@ -53,6 +65,54 @@ public class TeamConfiguration {
 	public SqlSessionTemplate sqlSession() throws Exception {
 		return new SqlSessionTemplate(sqlSessionFactory());
 	}    
+	
+	/* Board 관련 */
+	@Bean
+	public InsertBoardCommand InsertBoardCommand() {
+		return new InsertBoardCommand();
+	}
+	@Bean
+	public BoardListCommand boardListCommand() {
+		return new BoardListCommand();
+	}
+	@Bean
+	public SearchBoardCommand searchBoardCommand() {
+		return new SearchBoardCommand();		
+	}
+	@Bean
+	public SelectNoticeCommand selectInformCommand() {
+		return new SelectNoticeCommand();
+	}
+	@Bean
+	public ShowBoardCommand showBoardCommand() {
+		return new ShowBoardCommand();
+	}
+	@Bean
+	public UpdateBoardPageCommand UpdateBoardPageCommand() {
+		return new UpdateBoardPageCommand();
+	}
+	@Bean
+	public UpdateBoardCommand updateBoardCommand() {
+		return new UpdateBoardCommand();
+	}
+	@Bean
+	public DeleteBoardCommand deleteBoardCommand() {
+		return new DeleteBoardCommand();
+	}
+	
+	/* Reply 관련 */
+	@Bean
+	public InsertReplyCommand insertReplyCommand() {
+		return new InsertReplyCommand();
+	}
+	@Bean
+	public GetReplyListCommand getReplyListCommand() {
+		return new GetReplyListCommand();
+	}
+	
+	
+	
+	
 	
 	// 회원(Member)
 	@Bean
@@ -100,8 +160,17 @@ public class TeamConfiguration {
 		return new FindPwCommand();
 	}
 	@Bean
+	public ChangePwCommand changePwCommand(){ // 비밀번호 찾기&변경
+		return new ChangePwCommand();
+	}
+	@Bean
 	public LeaveCommand leaveCommand(){ // 회원탈퇴
 		return new LeaveCommand();
+	}
+	
+	@Bean
+	public AdminLoginCommand adminLoginCommand() {
+		return new AdminLoginCommand();
 	}
 
 }

@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 로그인(login) -->
 	<select id="login" resultType="com.team.d.dto.MemberDTO">
-		SELECT MNO, MNAME, MID, MPW, MEMAIL, MPHONE, MGRADE, MREGDATE, STATUS
+		SELECT MNO, MNAME, MID, MPW, MEMAIL, MPHONE, MGRADE, MREGDATE
 		  FROM MEMBER
 		 WHERE MID = #{mId}
 		   AND MPW = #{mPw}
@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 회원가입(join) -->
 	<insert id="join">
 		INSERT INTO MEMBER
-		VALUES (MEMBER_SEQ.NEXTVAL, #{mName}, #{mId}, #{mPw}, #{mEmail}, #{mPhone}, 'bronze', SYSDATE, 0)
+		VALUES (MEMBER_SEQ.NEXTVAL, #{mName}, #{mId}, #{mPw}, #{mEmail}, #{mPhone}, 'bronze', SYSDATE)
 	</insert>
 	
 	<!-- 비밀번호 변경(updatePw) -->
@@ -57,7 +57,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		   AND MEMAIL = #{mEmail}
 	</select>
 	
-	<!-- 비밀번호 찾기&새 비밀번호 변경(changePw) -->
+	<!-- 비밀번호 찾기&변경(findPw) -->
+	<select id="findPw" resultType="com.team.d.dto.MemberDTO">
+		SELECT *
+		  FROM MEMBER
+		 WHERE MID = #{mId}
+		   AND MEMAIL = #{mEmail}
+	</select>
+	
+	<!-- 비밀번호 찾기&변경(changePw) -->
 	<update id="changePw">
 		UPDATE MEMBER
 		   SET MPW = #{mPw}
@@ -70,5 +78,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  FROM MEMBER
 		 WHERE MNO = #{mNo}
 	</delete>
+	<!-- <update id="leave">
+		UPDATE MEMBER
+		   SET STATUS = -1
+		 WHERE MNO = #{mNo}
+	</update> -->
+	
+	<!-- 관리자 로그인(login) -->
+	<select id="adminLogin" parameterType="com.team.d.dto.MemberDTO" resultType="com.team.d.dto.MemberDTO">
+		SELECT MNAME, MID, MPW
+		  FROM ADMIN
+		 WHERE MID = #{mId}
+		   AND MPW = #{mPw}
+	</select>
 
 </mapper>
